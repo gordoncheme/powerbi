@@ -6,8 +6,8 @@ pgdst.ProdCons.Daily.y-axis.max =
 1.1 * MAX(CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[ReportDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),ALLSELECTED(_TABLE_PRODUCTION_CONSUMPTION_CONFIG)),CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[EntryDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),ALLSELECTED(_TABLE_PRODUCTION_CONSUMPTION_CONFIG)))
 
 //002
-//Summarize table with small multiples - the column chart and line chart with same table sourced values
-//does not seem to want to work when the line value is from a different table, or even a different value, than the summarized value, in the column chart and measure.  Need to play around with getting the values for column and line in the same table and maybe in the same table column filtered based on another column
+//Summarize table with small multiples - the column chart 
+//does not seem to want to work for the line value when it is another measure as if the secondary y-axis measure cannot see the small multiple category of the line
 //ALLSELECTED() does not see the small multiple for the bar chart, so we have to use SELECTEDVALUE() or VALUES()
 //min would be MINXX
 pgdst.ProdCons.Daily.SmallMultiple.Commodity.Column.y-axis.max = 
@@ -16,6 +16,3 @@ pgdst.ProdCons.Daily.SmallMultiple.Commodity.Column.y-axis.max =
 
 //---------------------------------------------------//
 //Test Space - Ignore/ Delete
-//Summarize table with small multiples - the line chart
-pgdst.ProdCons.Daily.SmallMultiple.Commodity.Line.y-axis.min = 
-1.1 * CALCULATE(MINX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[ReportDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),pgdst_ProdCons[Location_ConfigID] IN VALUES(OrigFcst_LatestActual[Location_ConfigID]))
