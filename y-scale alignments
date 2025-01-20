@@ -23,4 +23,4 @@ pgdst.ProdCons.Daily.SmallMultiple.Commodity.Column.y-axis.max =
 //Test Space - Ignore/ Delete
 //Summarize table with small multiples - the line chart
 pgdst.ProdCons.Daily.SmallMultiple.Commodity.Line.y-axis.min = 
-1.1 * CALCULATE(MINX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[EntryDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity] = "Sour Gas Oil")
+1.1 * CALCULATE(MINX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[ReportDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),pgdst_ProdCons[Location_ConfigID] IN VALUES(OrigFcst_LatestActual[Location_ConfigID]))
