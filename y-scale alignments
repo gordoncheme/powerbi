@@ -1,0 +1,11 @@
+// Summarize table without small multiples
+//ALLSELECTED() honors the explicit filters and slicers, the totals for the visual
+//min would be MINXX
+pgdst.ProdCons.Daily.y-axis.max = 
+1.1 * MAX(CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[EntryDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),ALLSELECTED(_TABLE_PRODUCTION_CONSUMPTION_CONFIG)),CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[EntryDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),ALLSELECTED(_TABLE_PRODUCTION_CONSUMPTION_CONFIG)))
+
+//Summarize table with small multiples - the bar chart
+//ALLSELECTED() does not see the small multiple for the bar chart, but somehow does see the breakout for the line chart in the example from which this is sourced
+//min would be MINXX
+pgdst.ProdCons.Daily.SmallMultiple,Column.y-axis.max = 
+1.1 * CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[EntryDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity] = SELECTEDVALUE(_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity]),_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location] = SELECTEDVALUE(_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location]))
