@@ -3,15 +3,23 @@
 //ALLSELECTED() honors the explicit filters and slicers, the totals for the visual
 //min would be MINXX
 pgdst.ProdCons.Daily.y-axis.max = 
-1.1 * MAX(CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[EntryDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),ALLSELECTED(_TABLE_PRODUCTION_CONSUMPTION_CONFIG)),CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[EntryDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),ALLSELECTED(_TABLE_PRODUCTION_CONSUMPTION_CONFIG)))
+1.1 * MAX(CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[ReportDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),ALLSELECTED(_TABLE_PRODUCTION_CONSUMPTION_CONFIG)),CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[EntryDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),ALLSELECTED(_TABLE_PRODUCTION_CONSUMPTION_CONFIG)))
 
 //002
-//Summarize table with small multiples - the bar chart
+//Summarize table with small multiples - the column chart and line chart with same table sourced values
 //ALLSELECTED() does not see the small multiple for the bar chart, so we have to use SELECTEDVALUE() or VALUES()
 //min would be MINXX
 pgdst.ProdCons.Daily.SmallMultiple.Commodity.Column.y-axis.max = 
-1.1 * CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[EntryDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity] = SELECTEDVALUE(_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity]))
+1.1 * CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[ReportDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity] = SELECTEDVALUE(_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity]),_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location] = SELECTEDVALUE(_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location]))
 
+//003
+//Summarize table with small multiples - the line chart with values from another table
+//when using the same data as the column chart, 002 measure is "seen" for the secondary y-axis scale for the line chart, but having difficulty getting the same result when other data is used for the line chart
+
+
+
+
+//---------------------------------------------------//
 //Test Space - Ignore/ Delete
 //Summarize table with small multiples - the line chart
 pgdst.ProdCons.Daily.SmallMultiple.Commodity.Line.y-axis.min = 
