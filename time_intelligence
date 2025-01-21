@@ -20,7 +20,7 @@ CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]),DATESMTD(dimRunDates[Date]))
 
 //004
 //Time Period Total
-//Returns the total value for all selected run dates
+//Returns the total value for all selected dates
 DailyAccuracyPivot.ProdCons.Variance.BPD total date = 
 CALCULATE(
 	[DailyAccuracyPivot.ProdCons.Variance.BPD],
