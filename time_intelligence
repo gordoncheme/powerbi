@@ -16,4 +16,12 @@ IF(MINX(pgdst_ProdCons,pgdst_ProdCons[Category_Short]) = "MTD",BLANK(),CALCULATE
 BPD_ProdCons.MTD.DlyFcst = 
 CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]),DATESMTD(dimRunDates[Date]))
 
-Place 002 and 003 on chart together, "MTD" on top of "Total", to show actualized formatted single line chart
+//Place 002 and 003 on chart together, "MTD" on top of "Total", to show actualized formatted single line chart
+
+//004 Time Period Total
+//Returns the total value for all selected run dates
+DailyAccuracyPivot.ProdCons.Variance.BPD total date = 
+CALCULATE(
+	[DailyAccuracyPivot.ProdCons.Variance.BPD],
+	ALLSELECTED('dimRunDates'[Date])
+)
