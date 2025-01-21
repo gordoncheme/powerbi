@@ -1,1 +1,19 @@
+//001 
+//simple MTD total
+BPD_ProdCons_OrigFcst.MTD = 
+CALCULATE(SUM(OrigFcst_LatestActual[BPD_ProdCons_OrigFcst]),DATESMTD(dimRunDates[Date]))
 
+//002
+//MTD total of only actualized values (e.g., "MTD")
+BPD_ProdCons.MTD.MTD = 
+IF(MINX(pgdst_ProdCons,pgdst_ProdCons[Category_Short]) <> "MTD",BLANK(),CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]),DATESMTD(dimRunDates[Date])))
+
+//003
+//MTD total of non-actualized values + actualized values.  Allows adding the two together
+BPD_ProdCons.MTD.DlyFcst = 
+IF(MINX(pgdst_ProdCons,pgdst_ProdCons[Category_Short]) = "MTD",BLANK(),CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]),DATESMTD(dimRunDates[Date]))) + [BPD_ProdCons.MTD.MTD]
+//could also do a simple MTD total for this
+BPD_ProdCons.MTD.DlyFcst = 
+CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]),DATESMTD(dimRunDates[Date]))
+
+Place 002 and 003 on chart together, "MTD" on top of "Total", to show actualized formatted single line chart
