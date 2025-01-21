@@ -1,0 +1,3 @@
+//001
+//Label if a certain hierarchy is in scope
+pgdst.heirarchy.category.date = IF(ISINSCOPE(dimRunDates[Date].[Day]),MIN(pgdst_ProdCons[Category]),BLANK())
