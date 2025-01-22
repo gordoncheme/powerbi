@@ -1,1 +1,3 @@
-
+//001
+//Relative date filter for current year.
+YearFilter = IF(YEAR(dimFinishDate[date]) = YEAR(TODAY()),"Current",CONVERT(YEAR(dimFinishDate[Date]),STRING))
