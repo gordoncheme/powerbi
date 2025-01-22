@@ -1,3 +1,17 @@
+//Note that calculated columns do not allow variant data types.  To return text in one case, the other must return text.  This amounts to formatting numbers and dates as strings to also show "current" or "latest" based on condition.
+
 //001
 //Relative date filter for current year.
 YearFilter = IF(YEAR(dimFinishDate[date]) = YEAR(TODAY()),"Current",CONVERT(YEAR(dimFinishDate[Date]),STRING))
+
+//002
+//Latest Date (price, entry, etc)
+//It is best to first have a dimension date table for the date
+Date for filter = 
+VAR _MaxDate = MAX (MPRVolEffDates[EffectiveStartDate])
+RETURN
+    IF(
+        MPRVolEffDates[EffectiveStartDate] = _MaxDate,
+        "Latest",
+        FORMAT(MPRVolEffDates[EffectiveStartDate],"mm/dd/yyyy")
+    )
