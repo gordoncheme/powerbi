@@ -1,15 +1,15 @@
 //Note that calculated columns do not allow variant data types.  To return text in one case, the other must return text.  This amounts to formatting numbers and dates as strings to also show "current" or "latest" based on condition.
 
 //001
+//Relative date filter for current year.
 //!DAX
 //!CalcColumn
-//Relative date filter for current year.
 YearFilter = IF(YEAR(dimFinishDate[date]) = YEAR(TODAY()),"Current",CONVERT(YEAR(dimFinishDate[Date]),STRING))
 
 //002
+//Latest Date (price, entry, etc)
 //!DAX
 //!CalcColumn
-//Latest Date (price, entry, etc)
 //It is best to first have a dimension date table for the date
 //it is recommended to have a card visual next to the slicer that uses this calculated column to display what "latest" is
 Date for filter = 
@@ -22,8 +22,9 @@ RETURN
     )
 
 //003
-//!M-Code
 //LAST-REFRESH shown on the dashboard
+//!M-Code
+//!Transform Data
 //    New Source
 //        Blank Query
 = DateTime.LocalNow()
