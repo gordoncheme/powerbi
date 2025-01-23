@@ -1,6 +1,6 @@
 This project stores various approaches to power bi calculations, which can DAX, M-code, TMDL, etc
 
-Record items as such, in this order for the header before the code
+Record items as such, in this order for the header before the code.  Order after the code doesn't matter
 
 //[ID]
 
