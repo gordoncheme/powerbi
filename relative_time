@@ -1,10 +1,12 @@
 //Note that calculated columns do not allow variant data types.  To return text in one case, the other must return text.  This amounts to formatting numbers and dates as strings to also show "current" or "latest" based on condition.
 
 //001
+//!DAX
 //Relative date filter for current year.
 YearFilter = IF(YEAR(dimFinishDate[date]) = YEAR(TODAY()),"Current",CONVERT(YEAR(dimFinishDate[Date]),STRING))
 
 //002
+//!DAX
 //Latest Date (price, entry, etc)
 //It is best to first have a dimension date table for the date
 //it is recommended to have a card visual next to the slicer that uses this calculated column to display what "latest" is
@@ -16,3 +18,14 @@ RETURN
         "Latest",
         FORMAT(MPRVolEffDates[EffectiveStartDate],"mm/dd/yyyy")
     )
+
+//003
+//!M-Code
+//LAST-REFRESH shown on the dashboard
+//    New Source
+//        Blank Query
+= DateTime.LocalNow()
+//"Transform" contextual menu >>> "To Table"
+//Applied Step - Rename Column:  "Last Refresh"
+//Applied Step - Change Type:  datetime
+
