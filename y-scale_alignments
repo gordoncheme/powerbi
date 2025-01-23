@@ -1,6 +1,7 @@
 //001 
-//!DAX
 //for combo chart without small multiples
+//!DAX
+//!Measure
 //Summarize table
 //ALLSELECTED() honors the explicit filters and slicers, the totals for the visual
 //min would be MINXX
@@ -8,8 +9,9 @@ pgdst.ProdCons.Daily.y-axis.max =
 1.1 * MAX(CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[ReportDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),ALLSELECTED(_TABLE_PRODUCTION_CONSUMPTION_CONFIG)),CALCULATE(MAXX(SUMMARIZECOLUMNS(pgdst_ProdCons[Date],pgdst_ProdCons[EntryDate],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Location],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[CommodityGroup],_TABLE_PRODUCTION_CONSUMPTION_CONFIG[Commodity],"BPD_ProdCons",CALCULATE(SUM(pgdst_ProdCons[BPD_ProdCons]))),[BPD_ProdCons]),ALLSELECTED(_TABLE_PRODUCTION_CONSUMPTION_CONFIG)))
 
 //002
-//!DAX
 //for combo chart with small multiples
+//!DAX
+//!Measure
 //Summarize table - the column chart
 //does not seem to want to work for the line value when it is another measure as if the secondary y-axis measure cannot see the small multiple category of the line
 //ALLSELECTED() does not see the small multiple for the bar chart, so we have to use SELECTEDVALUE() or VALUES()
