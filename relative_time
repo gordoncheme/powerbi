@@ -7,7 +7,7 @@ YearFilter = IF(YEAR(dimFinishDate[date]) = YEAR(TODAY()),"Current",CONVERT(YEAR
 //002
 //Latest Date (price, entry, etc)
 //It is best to first have a dimension date table for the date
-//it is recommended to have a card visual next to the slice that uses this calculated column to display what "latest" is
+//it is recommended to have a card visual next to the slicer that uses this calculated column to display what "latest" is
 Date for filter = 
 VAR _MaxDate = MAX (MPRVolEffDates[EffectiveStartDate])
 RETURN
