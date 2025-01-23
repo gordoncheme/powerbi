@@ -1,4 +1,5 @@
 //001
 //!DAX
+//!Measure
 //Label if a certain hierarchy is in scope
 pgdst.hierarchy.category.date = IF(ISINSCOPE(dimRunDates[Date].[Day]),MIN(pgdst_ProdCons[Category]),BLANK())
