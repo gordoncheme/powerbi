@@ -2,11 +2,13 @@
 
 //001
 //!DAX
+//!CalcColumn
 //Relative date filter for current year.
 YearFilter = IF(YEAR(dimFinishDate[date]) = YEAR(TODAY()),"Current",CONVERT(YEAR(dimFinishDate[Date]),STRING))
 
 //002
 //!DAX
+//!CalcColumn
 //Latest Date (price, entry, etc)
 //It is best to first have a dimension date table for the date
 //it is recommended to have a card visual next to the slicer that uses this calculated column to display what "latest" is
