@@ -1,1 +1,8 @@
+//001
+//Return a single value in Dax Studio
+//!DAX (Studio)
+//!Calculated Table
+EVALUATE
+ROW("Result", COUNTROWS(Sales))
+
 
