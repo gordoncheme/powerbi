@@ -16,6 +16,7 @@ VALUES([column])
 //!DAX
 //!Calculated Table
 //Need to use CALCULATE() for extended calculated columns
+//returns multiple columns with unique values combinations
 SUMMARIZE(
  'Date', 
  'Date'[WeekNo], 
@@ -35,5 +36,75 @@ ADDCOLUMNS(
  RELATED('Date'[WeekNo])
 )
 
+//006
+//Produce Natural Inner Join
+//!DAX
+//!Calculated Table
+//Finds common field and returns inner join on common field
+//Can ORDER BY in Dax studio
+NATURALINNERJOIN(
+ ADDCOLUMNS(VALUES('Date'[WeekNo]),
+     "Weekly Sales", 
+     CALCULATE(SUM(Sales[Sales Amount])), -- or you can use {Sales] Measure
+     "Products Sold This Week", 
+     CALCULATE(DISTINCTCOUNT(Sales[ProductID])) --or you can use [# of Products Sold] Measure
+ ),
+ ADDCOLUMNS(
+     Sales,
+     "WeekNo",
+     RELATED('Date'[WeekNo])
+ )
+)
+order by [date]
 
+//006
+//Filter temp tables by storing them in a variable
+//!DAX (Studio)
+//!Calculated Table
+DEFINE
+ VAR NaturalJoinTable=
+ NATURALINNERJOIN(
+     ADDCOLUMNS(VALUES('Date'[WeekNo]),
+         "Weekly Sales", 
+         CALCULATE(SUM(Sales[Sales Amount])), -- or you can use {Sales] Measure
+         "Products Sold This Week", 
+         CALCULATE(DISTINCTCOUNT(Sales[ProductID])) --or you can use [# of Products Sold] Measure
+     ),
+     ADDCOLUMNS(
+         Sales,
+         "WeekNo",
+         RELATED('Date'[WeekNo])
+     )
+ )
+ 
+EVALUATE
 
+FILTER(
+ NaturalJoinTable,
+ [Products Sold This Week]>3 &&
+ [Weekly Sales]>8000 &&
+ DIVIDE([Sales Amount], [Weekly Sales])>0.20
+)
+ORDER BY [Date]  
+
+//007
+//Cartesian product of tables, a child table evaluated by parent table
+//!DAX (Studio)
+//!Calculated Table
+//cartesian product of each R.T1 and each R.T2 evaluated in context of current R.T1
+EVALUATE
+GENERATE(
+ ADDCOLUMNS(VALUES('Date'[WeekNo]),
+     "Weekly Sales", 
+     CALCULATE(SUM(Sales[Sales Amount])), -- or you can use {Sales] Measure
+     "Products Sold This Week", 
+     CALCULATE(DISTINCTCOUNT(Sales[ProductID])) --or you can use [# of Products Sold] Measure
+ ),
+ VAR CurrentWeekNo = [WeekNo]
+ 
+ RETURN
+ ROW(
+     "CurrentWeekNo",
+     CurrentWeekNo
+ )
+)
