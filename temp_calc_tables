@@ -5,4 +5,14 @@
 EVALUATE
 ROW("Result", COUNTROWS(Sales))
 
+//002
+//Return one column with unique values in specified column
+//!DAX (Studio)
+//!Calculated Table element
+VALUES([column])
+
+//003
+//Return one column with unique values in specified column
+//!DAX (Studio)
+//!Calculated Table element
 
