@@ -12,9 +12,10 @@ ROW("Result", COUNTROWS(Sales))
 VALUES([column])
 
 //003
-//Add extended columns from different related tables
+//Add calculated extended columns from different related tables
 //!DAX
 //!Calculated Table
+//Need to use CALCULATE() for extended calculated columns
 SUMMARIZE(
  'Date', 
  'Date'[WeekNo], 
@@ -23,3 +24,16 @@ SUMMARIZE(
  "Products Sold This Week", 
  CALCULATE(DISTINCTCOUNT(Sales[ProductID])) --or you can use [# of Products Sold] Measure
 )
+
+//005
+//Add extended columns from different related tables
+//!DAX
+//!Calculated Table
+ADDCOLUMNS(
+ Sales,
+ "WeekNo",
+ RELATED('Date'[WeekNo])
+)
+
+
+
