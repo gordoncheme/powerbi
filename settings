@@ -3,4 +3,5 @@
 //!Application Setting
 //!Power BI Desktop
 //Default is for this to be OFF meaning persitent filters are enabled.  When this setting is ON, then the report resets to the default view when users return to the report.  With this OFF, user filters and slicers "stick"
+//ON is like Tableau, OFF is like Power BI holding Tableau view based on user slicers and filters
 File >> Options and Settings >> Current File | Report Settings >> Persistent Filters | "Don't allow end users to save filters on this file in the Power BI service"
