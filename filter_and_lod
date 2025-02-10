@@ -2,7 +2,7 @@
 //Check when to use lower level of detail table
 //!DAX
 //!Measure
-//Checks if the higher lod table (more detailed) is filtered against the expanded unfiltered lower lod table (less detailed)
+//Checks if the higher lod table (more detailed) is filtered against the expanded unfiltered lower lod table (less detailed). Assumes the use of common dimension tables
 IF(
   CALCULATE (
     ISCROSSFILTERED ('[higher lod table]')
