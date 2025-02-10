@@ -3,9 +3,7 @@
 //!M-Code
 //!Transform Data Object
 //use Chat GPT OpenAI API in Power Query to send a query and get a result back, automatically categorizing etc
-
 [Code]
-
 //application steps - follow intructions in video. https://youtu.be/gHuARhCDV4A?si=BW2eu0QjvGCOJmWT
   //Get M-code from ChatGPT itself, OpenAI API Key, pass columns into the ChatGPT and store the results in other columns
 //applied steps - follow instructions in video.
