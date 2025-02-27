@@ -2,11 +2,11 @@
 has no argumentsF
 6 NAMEOF(<value>) Returns the column or measure name of a valueF
 6 ISBLANK(<value>) // ISERROR(<value>) Returns whether the value is blank // an errorF
-6 ISLOGICAL(<value>) Checks whether a value is logical or notF
-6 ISNUMBER(<value>) Checks whether a value is a number or notF
+6 ISLOGICAL(<value>) Checks whether a value is logical or notF ONLY CHECKS THE COLUMN TYPE, NOT IF IT IS "CONVERTABLE"
+6 ISNUMBER(<value>) Checks whether a value is a number or notF ONLY CHECKS THE COLUMN TYPE, NOT IF IT IS "CONVERTABLE"
 6 ISERROR (<value>)
-6 ISNONTEXT(<value>)
-6 ISTEXT(<value>)
+6 ISNONTEXT(<value>) ONLY CHECKS THE COLUMN TYPE, NOT IF IT IS "CONVERTABLE"
+6 ISTEXT(<value>)  ONLY CHECKS THE COLUMN TYPE, NOT IF IT IS "CONVERTABLE"
 6 ISFILTERED(<table> | <column>) Returns true when there are direct filters on a columnF
 6 ISCROSSFILTERED(<table> | <column>) Returns true when there are crossfilters on a columnF
 6 USERPRINCIPALNAME() Returns the user principal name or email address. This function has no 
