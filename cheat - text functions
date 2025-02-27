@@ -1,0 +1,14 @@
+6 EXACT(<text_1>, <text_2>) Checks if two strings are identical (EXACT() is case sensitive).
+6 FIND(<text_tofind>, <in_text>) Returns the starting position a text within another text 
+(FIND() is case sensitive)F
+6 FORMAT(<value>, <format>) Converts a value to a text in the specified number formatF
+6 LEFT(<text>, <num_chars>) Returns the number of characters from the start of a string.
+6 RIGHT(<text>, <num_chars>) Returns the number of characters from the end of a stringF
+6 LEN(<text>) Returns the number of characters in a string of textF
+6 LOWER(<text>) Converts all letters in a string to lowercaseF
+6 UPPER(<text>) Converts all letters in a string to uppercaseF
+6 TRIM(<text>) Remove all spaces from a text stringF
+6 CONCATENATE(<text_1>, <text_2>) Joins two strings together into one stringF
+6 SUBSTITUTE(<text>, <old_text>, <new_text>, <instance_num>) Replaces existing text with new text in a stringF
+6 REPLACE(<old_text>, <start_posotion>, <num_chars>, <new_text>) Replaces part of a string with 
+a new string.
