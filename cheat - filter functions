@@ -1,0 +1,7 @@
+6 FILTER(<table>, <filter>) Returns a table that is a subset of another table or expressionF
+6 CALCULATE(<expression>[, <filter1> [, <filter2> [, …]]]) Evaluates an expression in a filter contextF
+6 HASONEVALUE(<columnName>) Returns TRUE when the context for columnName has been filtered down to one distinct value only. Otherwise it is FALSEF
+6 ALLNOBLANKROW(<table> | <column>[, <column>[, <column>[,…]]]) Returns a table that is a subset of another table or expressionF
+6 ALL([<table> | <column>[, <column>[, <column>[,…]]]]) Returns all the rows in a table, or all the values in a column, ignoring any filters that might have been appliedF
+6 ALLEXCEPT(<table>, <column>[, <column>[,..]]) Returns all the rows in a table except for those rows that are affected by the specified column filtersF
+6 REMOVEFILTERS([<table> | <colum
