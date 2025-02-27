@@ -1,0 +1,8 @@
+6 CALENDAR(<start_date>, <end_date>) Returns a table with a single column named "Date" that contains a contiguous set of datesF
+6 DATE(<year>, <month>, <day>) Returns the specified date in datetime formatF
+6 DATEDIFF(<date_1>, <date_2>, <interval>) Returns the number of units between two dates as defined in <interval>
+6 DATEVALUE(<date_text>) Converts a date in text to a date in datetime formatF
+6 DAY(<date>) Returns a number from 1 to 31 representing the day of the monthF
+6 WEEKNUM(<date>) Returns weeknumber in the yearF
+6 MONTH(<date>) Returns a number from 1 to 12 representing a monthF
+6 QUARTER(<date>) Returns a number from 1 to 4 representing a quarter.
