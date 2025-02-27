@@ -1,3 +1,8 @@
+//001
+/SWITCH to check for condition
+//!DAX
+//!Measure, CalcColumn
+//Using TRUE as the fi rst parameter means, “Return the first result where the condition evaluates to TRUE"
 SWITCH (
  TRUE (),
  Product[Size] = "XL" && Product[Color] = "Red", "Red and XL",
@@ -5,17 +10,3 @@ SWITCH (
  Product[Size] = "L" && Product[Color] = "Green", "Green and L"
 )
 
-
-//001
-//[Name]
-
-//![DAX] e.g. DAX, M-Code
-//![Measure], [CalcColumn]
-//Using TRUE as the fi rst parameter means, “Return the fi rst result where the condition 
-evaluates to TRUE
-
-[Code]
-
-//[application steps . . what to do in the application usually in "Transform Data"]
-
-//[applied steps in "Transform Data"]
