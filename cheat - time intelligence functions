@@ -1,0 +1,9 @@
+6 DATEADD(<dates>, <number_of_intervals>, <interval>) Moves a date by a specific intervalF
+6 DATESBETWEEN(<dates>, <date_1>, <date_2>) Returns the dates between specified datesF
+6 TOTALYTD(<expression>, <dates>[, <filter>][, <year_end_date>]) Evaluates the year-to-date 
+value of the expression in the current contextF
+6 SAMEPERIODLASTYEAR(<dates>) Returns a table that contains a column of dates shifted one 
+year back in timeF
+6 STARTOFMONTH(<dates>) // ENDOFMONTH(<dates>) Returns the start // end of the monthF
+6 STARTOFQUARTER(<dates>) // ENDOFQUARTER(<dates>) Returns the start // end of the quarterF
+6 STARTOFYEAR(<dates>) // ENDOFYEAR(<dates>) Returns the start // end of the quarter.
