@@ -1,0 +1,11 @@
+6 SUMMARIZE(<table>, <groupBy_columnName>[, <groupBy_columnName>]…[, <name>, <expression>]…)
+ Returns a summary table for the requested totals over a set of groupsF
+6 DISTINCT(<table>) Returns a table by removing duplicate rows from another table or 
+expressionF
+6 ADDCOLUMNS(<table>, <name>, <expression>[, <name>, <expression>]…) Adds calculated columns to the given table or table expressionF
+6 SELECTCOLUMNS(<table>, <name>, <expression>[, <name>, <expression>]…) Selects calculated columns from the given table or table expressionF
+6 GROUPBY(<table> [, <groupBy_columnName>[, [<column_name>] [<expression>]]…) Create a summary of the input table grouped by specific columnsF
+6 INTERSECT(<left_table>, <right_table>) Returns the rows of the left-side table that appear in the right-side tableF
+6 NATURALINNERJOIN(<left_table>, <right_table>) Joins two tables using an inner joinF
+6 NATURALLEFTOUTERJOIN(<left_table>, <right_table>) Joins two tables using a left outer joinF
+6 UNION(<table>, <table>[, <table> [,…]]) Returns the union of tables with matching columns.
