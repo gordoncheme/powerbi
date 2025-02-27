@@ -1,0 +1,6 @@
+SWITCH (
+ TRUE (),
+ Product[Size] = "XL" && Product[Color] = "Red", "Red and XL",
+ Product[Size] = "XL" && Product[Color] = "Blue", "Blue and XL",
+ Product[Size] = "L" && Product[Color] = "Green", "Green and L"
+)
