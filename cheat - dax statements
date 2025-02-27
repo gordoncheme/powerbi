@@ -1,0 +1,6 @@
+6 VAR(<name> = <expression>) Stores the result of an expression as a named variable. To 
+return the variable, use RETURN after the variable is definedF
+6 COLUMN(<table>[<column>] = <expression>) Stores the result of an expression as a column in 
+a table.
+6 ORDER BY(<table>[<column>]) Defines the sort order of a column. Every column can be sorted 
+in ascending (ASC) or descending (DESC) way.
