@@ -1,0 +1,2 @@
+6 CROSSFILTER(<left_column>, <right_column>, <crossfiltertype>) Specifies the cross-filtering direction to be used in a calculationF
+6 RELATED(<column>) Returns a related value from another table.
