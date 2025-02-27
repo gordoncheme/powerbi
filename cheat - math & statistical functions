@@ -1,0 +1,16 @@
+6 SUM(<column>) Adds all the numbers in a columnF
+6 SUMX(<table>, <expression>) Returns the sum of an expression evaluated for each row in a tableF
+6 AVERAGE(<column>) Returns the average (arithmetic mean) of all the numbers in a columnF
+6 AVERAGEX(<table>, <expression>) Calculates the average (arithmetic mean) of a set of expressions evaluated over a tableF
+6 MEDIAN(<column>) Returns the median of a columnF
+6 MEDIANX(<table>, <expression>) Calculates the median of a set of expressions evaluated over a tableF
+6 GEOMEAN(<column>) Calculates the geometric mean of a columnF
+6 GEOMEANX(<table>, <expression>) Calculates the geometric mean of a set of expressions evaluated over a tableF
+6 COUNT(<column>) Returns the number of cells in a column that contain non-blank valuesF
+6 COUNTX(<table>, <expression>) Counts the number of rows from an expression that evaluates to a non-blank valueF
+6 DIVIDE(<numerator>, <denominator> [,<alternateresult>]) Performs division and returns alternate result or BLANK() on division by 0F
+6 MIN(<column>) Returns a minimum value of a columnF
+6 MAX(<column>) Returns a maximum value of a columnF
+6 COUNTROWS([<table>]) Counts the number of rows in a tableF
+6 DISTINCTCOUNT(<column>) Counts the number of distinct values in a columnF
+6 RANKX(<table>, <expression>[, <value>[, <order>[, <ties>]]]) Returns the ranking of a number in a list of numbers for each row in the table argument.
