@@ -4,3 +4,18 @@ SWITCH (
  Product[Size] = "XL" && Product[Color] = "Blue", "Blue and XL",
  Product[Size] = "L" && Product[Color] = "Green", "Green and L"
 )
+
+
+//001
+//[Name]
+
+//![DAX] e.g. DAX, M-Code
+//![Measure], [CalcColumn]
+//Using TRUE as the fi rst parameter means, “Return the fi rst result where the condition 
+evaluates to TRUE
+
+[Code]
+
+//[application steps . . what to do in the application usually in "Transform Data"]
+
+//[applied steps in "Transform Data"]
