@@ -1,5 +1,5 @@
 //001
-/SWITCH to check for condition
+//SWITCH to check for condition
 //!DAX
 //!Measure, CalcColumn
 //Using TRUE as the fi rst parameter means, “Return the first result where the condition evaluates to TRUE"
@@ -10,3 +10,19 @@ SWITCH (
  Product[Size] = "L" && Product[Color] = "Green", "Green and L"
 )
 
+//002
+//Formatting Multi-Typed Columns 
+//!DAX
+//!CalcColumn
+//When you have a column with multiple data types, create a calc column to return the formatted look
+Projected_Display_Values =  
+VAR rowValue = SELECTEDVALUE ( DealCaptureDetails[Projected] ) 
+VAR isNum = NOT ISERROR ( VALUE ( rowValue ) ) 
+RETURN 
+    SWITCH ( 
+        TRUE (), 
+        ISBLANK ( rowValue ), BLANK (), 
+        isNum && CONTAINSSTRING ( rowValue, "." ), FORMAT ( VALUE ( rowValue ), "#,##0.00" ), 
+        isNum, FORMAT ( VALUE ( rowValue ), "#,##0" ), 
+        rowValue 
+    ) 
