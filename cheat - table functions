@@ -1,7 +1,11 @@
 6 FILTER ( <table>, <condition> ) returns all the rows satisfying the condition
 6 ALL ( [<table> | <column>[, <column>[, <column>[,…]]]] ) returns table or column(s) with filters removed. ALL used with one column returns a table with all its unique 
 values
-6 ALLEXCEPT(<table>,<column>[,<column>[,…]]) returns a table with all filters removed except for the filters on the specified columns
+6 ALLEXCEPT (<table>,<column>[,<column>[,…]]) returns a table with all filters removed except for the filters on the specified columns
 6 ALLNOBLANKROW ( [<table> | <column>[, <column>[, <column>[,…]]]] ) like ALL, but does not include the blank row
 6 DISTINCT(<table>) returns a table containing only distinct rows
-6 VALUES(<TableNameOrColumnName>) When the input parameter is a column name, a single column table. When the input parameter is a table name, a table of the same columns is returned.
+6 VALUES(<TableNameOrColumnName>) When the input parameter is a column name, a single column table. When the input parameter is a table name, a table of the same columns is returned
+6 ALLSELECTED([<tableName> | <columnName>[, <columnName>[, <columnName>[,…]]]] )  The ALLSELECTED function gets the context that represents all rows and columns in the query, while keeping explicit filters and contexts other than row and column filters. This function can be used to obtain visual totals in queries. TableNameOrColumnName: Remove all filters on the specified table or column applied within the query. ColumnName: A column in the same base table.
+  If used without arguments (ALLSELECTED()), it removes filters applied inside the visual but keeps filters from outside (e.g., report/page filters). 
+  If used with column arguments (ALLSELECTED(Table[Column])), it removes only the filters on the specified column while keeping other filters. 
+6 xx
