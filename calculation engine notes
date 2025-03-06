@@ -1,0 +1,5 @@
+6 A blank row is added to the table on the one side of a relationship.  Orphaned rows on the many side are assigned to the blank row
+  DISTINCT excludes the BLANK row
+  VALUES includes the BLANK row
+
+6 
