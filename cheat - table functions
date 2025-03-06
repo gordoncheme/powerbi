@@ -1,1 +1,3 @@
-
+6 FILTER ( <table>, <condition> ). returns all the rows satisfying the condition
+6 ALL ( [<table> | <column>[, <column>[, <column>[,…]]]] ) returns table or column with filters removed
+6 ALLEXCEPT(<table>,<column>[,<column>[,…]]) 
