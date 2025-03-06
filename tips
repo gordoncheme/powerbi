@@ -26,3 +26,10 @@ RETURN
         isNum, FORMAT ( VALUE ( rowValue ), "#,##0" ), 
         rowValue 
     ) 
+
+//003
+//CONCATENATEX
+//!DAX
+//!Measure CalcColumn
+//Concatenates the result of an expression evaluated for each row in a table.
+CONCATENATEX(<table>, <expression>[, <delimiter> [, <orderBy_expression> [, <order>]]...])
