@@ -1,6 +1,6 @@
 6 A blank row is added to the table on the one side of a relationship.  Orphaned rows on the many side are assigned to the blank row
-  DISTINCT excludes the BLANK row
-  VALUES includes the BLANK row
+  DISTINCT excludes the BLANK row, use when want to exclude the BLANK ROW
+  VALUES includes the BLANK row, use by DEFAULT
   BE MINDFUL WHEN USING THESE IN CALCULATIONS FOR COUNT OF THINGS FOR EXAMPLE
 
 6 
