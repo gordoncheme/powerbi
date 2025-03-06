@@ -3,3 +3,5 @@
 values
 6 ALLEXCEPT(<table>,<column>[,<column>[,…]]) returns a table with all filters removed except for the filters on the specified columns
 6 ALLNOBLANKROW ( [<table> | <column>[, <column>[, <column>[,…]]]] ) like ALL, but does not include the blank row
+6 DISTINCT(<table>) returns a table containing only distinct rows
+6 VALUES(<TableNameOrColumnName>) When the input parameter is a column name, a single column table. When the input parameter is a table name, a table of the same columns is returned.
