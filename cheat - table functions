@@ -1,4 +1,5 @@
 6 FILTER ( <table>, <condition> ) returns all the rows satisfying the condition
 6 ALL ( [<table> | <column>[, <column>[, <column>[,…]]]] ) returns table or column(s) with filters removed. ALL used with one column returns a table with all its unique 
 values
-6 ALLEXCEPT(<table>,<column>[,<column>[,…]]) returns a table with all filters removed except for the filters on the specified columns.
+6 ALLEXCEPT(<table>,<column>[,<column>[,…]]) returns a table with all filters removed except for the filters on the specified columns
+6 ALLNOBLANKROW ( [<table> | <column>[, <column>[, <column>[,…]]]] ) like ALL, but does not include the blank row
