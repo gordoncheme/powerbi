@@ -1,1 +1,2 @@
 6 EARLIER(<column>, <number>) Returns the current value of the specified column in an outer evaluation pass of the mentioned column.
+  6 <number can skip evaluation passes.  1 is the next evaluation level out.  Default is 1
