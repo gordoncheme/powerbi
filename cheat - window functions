@@ -1,3 +1,9 @@
 6 INDEX(<position>[, <relation> or <axis>][, <orderBy>][, <blanks>][, <partitionBy>][, <matchBy>][, <reset>] ) Returns a row at an absolute position, specified by the position parameter, within the specified partition, sorted by the specified order. If the current partition can't be deduced to a single partition, multiple rows may be returned.
-  Requires <position>[, <relation> or <axis>][, <orderBy>]
-  +1 FIRST, -1 LAST
+  6 Requires <position>[, <relation> or <axis>][, <orderBy>]
+  6 +1 FIRST, -1 LAST
+  6 TIES dds columnst to force rows to be unique
+  6 [, <blanks>] KEEP or (?). Sorted based on data type
+  6 [, <partitionBy>] Returns the ranked values by partition. Uses "apply semantics" 
+  6 Can OMIT the source table [, <relation> or <axis>] --> ALLSELECTED for all columns in [, <orderBy>]
+    6 !Best Practice! is to be carefulwith ORDER BY and use ALL () to extend the filter context
+6 OFFSET ( <delta>[, <relation> or <axis>][, <orderBy>][, <blanks>][, <partitionBy>][, <matchBy>][, <reset>] ) Returns a single row that is positioned either before or after the current row within the same table, by a given offset. If the current row cannot be deduced to a single row, multiple rows may be returned.
