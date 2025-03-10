@@ -38,5 +38,5 @@ CONCATENATEX(<table>, <expression>[, <delimiter> [, <orderBy_expression> [, <ord
 //TREATAS()
 //!DAX
 //!Measure, Calc Column, Calc Table
-//Applies the result of a table expression as filters to columns from an unrelated table
+//Applies the result of a table expression as filters to columns from an unrelated table. Returns a table that contains all the rows in column(s) that are also in table_expression.
 TREATAS(table_expression, <column>[, <column>[, <column>[,…]]]} )
