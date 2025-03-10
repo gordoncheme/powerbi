@@ -17,3 +17,6 @@ Record items as such, in this order for the header before the code.  Order after
 //[application steps . . what to do in the application usually in "Transform Data"]
 
 //[applied steps in "Transform Data"]
+
+
+For "cheat" files, '6' represents a bullet, as in a bulleted list
