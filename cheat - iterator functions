@@ -1,3 +1,4 @@
 6 EARLIER(<column>, <number>) Returns the current value of the specified column in an outer evaluation pass of the mentioned column.
   6 <number can skip evaluation passes.  1 is the next evaluation level out.  Default is 1
   6 also EARLIEST
+6 RELATED() to iterate the many side (and access the one side), RELATEDTABLE() to iterate the one side (and access the many side)
