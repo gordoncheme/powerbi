@@ -1,3 +1,4 @@
+https://www.sqlbi.com/articles/introducing-window-functions-in-dax/
 6 INDEX(<position>[, <relation> or <axis>][, <orderBy>][, <blanks>][, <partitionBy>][, <matchBy>][, <reset>] ) Returns a row at an absolute position, specified by the position parameter, within the specified partition, sorted by the specified order. If the current partition can't be deduced to a single partition, multiple rows may be returned.
   6 Requires <position>[, <relation> or <axis>][, <orderBy>]
   6 +1 FIRST, -1 LAST
@@ -5,5 +6,11 @@
   6 [, <blanks>] KEEP or (?). Sorted based on data type
   6 [, <partitionBy>] Returns the ranked values by partition. Uses "apply semantics" 
   6 Can OMIT the source table [, <relation> or <axis>] --> ALLSELECTED for all columns in [, <orderBy>]
-    6 !Best Practice! is to be carefulwith ORDER BY and use ALL () to extend the filter context
+    6 !Best Practice! is to be carefulwith ORDER BY and use ALL () to extend the filter context if needed, good with dates
 6 OFFSET ( <delta>[, <relation> or <axis>][, <orderBy>][, <blanks>][, <partitionBy>][, <matchBy>][, <reset>] ) Returns a single row that is positioned either before or after the current row within the same table, by a given offset. If the current row cannot be deduced to a single row, multiple rows may be returned.
+  6 e.g., previous year 
+6 WINDOW ( from[, from_type], to[, to_type][, <relation> or <axis>][, <orderBy>][, <blanks>][, <partitionBy>][, <matchBy>][, <reset>] ) Returns multiple rows which are positioned within the given interval.
+  6 Allows the definition of a window based on the current row using either relative offsets or absolute references. Moreover, “apply semantics” and WINDOW produce complex results that require even more attention. 
+  With complexity comes power. WINDOWS is extremely powerful in computing running totals, moving averages, or complex totals.
+  6 moving average (from -5 REL, to 0 REL); running total (from 1 ABS, to 0 REL); use [, <partitionBy>] for "to date" type calcs
+  
