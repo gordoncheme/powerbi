@@ -13,9 +13,12 @@
 //!M-Code
 //!Measure
 //Use SVG standard to create special mini graphics via Scalable Vector Graphics (SVG).  Find the SVG to the data in the Measure
+[Code]
+/* Steps 
 6 https://youtu.be/QOcP5OvSwlI?si=OaMTUAe4XBT7v2-Z
 6 https://www.svgviewer.dev/
 6 Import as blank button fill to pbix just to show the svg
 6 Copy code to chatGPT; replace " with '; paste into Measure with data.svg pre-script
 6 Data Category: Image URl
-6 Use Data to alter the SVG
+6 Use Data to alter the SVG  
+*/
