@@ -3,4 +3,4 @@
   VALUES includes the BLANK row, use by DEFAULT
   BE MINDFUL WHEN USING THESE IN CALCULATIONS FOR COUNT OF THINGS FOR EXAMPLE
 
-6 Iterator: Iterator (1) Filter Context (2) new row context (3) iterate evaluated in filter and new row context (4) Aggregate evaluation
+6 Iterator order of operations (1) Filter Context (2) new row context (3) iterate evaluated in filter and new row context (4) Aggregate evaluation
