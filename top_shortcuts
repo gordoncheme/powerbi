@@ -9,3 +9,9 @@ https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-accessibility-
 //!DAX
 //NULL
 Ctrl + Shift + L
+
+//002
+//Comment or Uncomment
+//!DAX
+//NULL
+Ctrl + [/]
