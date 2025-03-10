@@ -33,3 +33,10 @@ RETURN
 //!Measure CalcColumn
 //Concatenates the result of an expression evaluated for each row in a table.
 CONCATENATEX(<table>, <expression>[, <delimiter> [, <orderBy_expression> [, <order>]]...])
+
+//004
+//TREATAS()
+//!DAX
+//!Measure, Calc Column, Calc Table
+//Applies the result of a table expression as filters to columns from an unrelated table
+TREATAS(table_expression, <column>[, <column>[, <column>[,…]]]} )
