@@ -1,1 +1,1 @@
-
+6 EARLIER(<column>, <number>) Returns the current value of the specified column in an outer evaluation pass of the mentioned column.
