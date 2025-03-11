@@ -6,3 +6,33 @@
 6 Iterator order of operations (1) Filter Context (2) new row context (3) iterate evaluated in filter and new row context (4) Aggregate evaluation
 
 6 FILTER() is an iterator
+
+6 CALCULATE
+/***********
+  Start
+    |
+    v
+  Step 1: Evaluate explicit filter arguments in the original evaluation context
+    |
+    v
+  Step 2: Copy original filter context, discard row contexts
+    |
+    v
+  Step 3: Perform context transition (apply implicit filters)
+    |
+    v
+  Step 4: Apply CALCULATE modifiers (USERELATIONSHIP, CROSSFILTER, ALL*)
+    |
+    v
+  Step 5: Evaluate explicit filter arguments again and apply them to the new filter context
+    |
+    v
+  End (New filter context is ready for CALCULATE)
+******************/
+/**************
+	1. CALCULATE evaluates all the explicit filter arguments in the original evaluation context. This includes both the original row contexts (if any) and the original filter context. All explicit filter arguments are evaluated independently in the original evaluation context. Once this evaluation is finished, CALCULATE starts building the new filter context. 
+	2. CALCULATE makes a copy of the original filter context to prepare the new filter context. It discards the original row contexts because the new evaluation context will not contain any row context. 
+	3. CALCULATE performs the context transition. It uses the current value of columns in the original row contexts to provide a filter with a unique value for all the columns currently being iterated in the original row contexts. This filter may or may not contain one individual row. There is no guarantee that the new filter context contains a single row at this point. If there are no row contexts active, this step is skipped. Once all implicit filters created by the context transition are applied to the new filter context, CALCULATE moves on to the next step. 
+	4. CALCULATE evaluates the CALCULATE modifiers USERELATIONSHIP, CROSSFILTER, and ALL*. This step happens after step 3. This is very important because it means that one can remove the effects of the context transition by using ALL, as described in Chapter 10. The CALCULATE modifiers are applied after the context transition, so they can alter the effects of the context transition. 
+5. CALCULATE evaluates all the explicit filter arguments in the original filter context. It applies their result to the new filter context generated after step 4. These filter arguments are applied to the new filter context once the context transition has happened so they can overwrite it, after filter removal—their filter is not removed by any ALL* modifier—and after the relationship architecture has been updated. However, the evaluation of filter arguments happens in the original filter context, and it is not affected by any other modifier or filter within the same CALCULATE function. The filter context generated after point (5) is the new filter context used by CALCULATE in the evaluation of its expression.
+******************/
