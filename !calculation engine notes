@@ -7,7 +7,7 @@
 
 6 FILTER() is an iterator
 
-6 CALCULATE
+6 CALCULATE : is implicit in MEASURES
 /***********
   Start
     |
