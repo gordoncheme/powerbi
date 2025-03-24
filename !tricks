@@ -22,3 +22,17 @@
 6 Data Category: Image URl
 6 Use Data to alter the SVG  
 */
+
+//003
+//Calculation Groups
+//!DAX
+//!Calculation Item
+//Create Calculation Groups to repeat calculations
+[Code]
+/* Steps
+6 https://youtu.be/ZOOdmUCO3m8
+6 (0) Acivate the group using slicer or filter
+6 (1) iterate SELECTEDMEASURE() aggregations over fact table
+6 (2) Use different relationships (e.g., dates) alternative to separate measure x relationship combinations. CALCULATE (SELECTEDMEASURE(),USERELATIONSHIP())
+6 (3) Conditional Formatting. SELECTEDMEAUSURE(), SELECTEDMEASURENAME() with dummy measure.  example has fixed grouping (e.g., year/quarter for min/max OR < Average, etc). Dummy measure for each measure that is used for conditional formatting
+*/
