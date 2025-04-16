@@ -5,3 +5,7 @@ Chapter 7
 -(Gordon) avoid measure references in large iterators
 -(Gordon) Iterator equirements: (1) define granularity (2) define expression to evaluate @ granularity (3) kind of aggregation
 -(Gordon) Trick: use CONCATENATEX to return a string of the selected dimensions: CONCATENATEX(VALUES([dimension]),[dimension],[delimiter],[dimension for order], [order direction])
+-(Gordon) ADDCOLUMNS() to create return table with all of the columns of the table expression it iterates; SELECTCOLUMNS() to reduce # columns of a table
+-(Gordon) AVERAGEX() for moving averages; blanks are skipped! Can also use DIVIDE([total to use], [count of periods])
+-(Gordon) RANKX() (1) lookup table iterated over first parameter, sorted lookup table of values (2) evaluate 2nd parameter in OG eval context (3) Position of value in 2nd step based on lookup table from 1st step.  Wrap in HASONEVALUE() to not show totals.  Use 1st and 3rd param for lookup table (1st) and value to rank (2nd). 4th param to set the order. 5th param to handle ties (DENSE, SKIP).  Use ALL() or ALLEXCEPT() for lookup table to ensure all are included either without filters or with them, depending on desired result
+-(Gordon) can iterate over higher levels of granularity, e.g. checking or quantity of something at the month level and dividing total by that count. Watch totals, that the LOD is proper (e.g. includes year and month)
