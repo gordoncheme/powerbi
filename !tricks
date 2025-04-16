@@ -36,3 +36,10 @@
 6 (2) Use different relationships (e.g., dates) alternative to separate measure x relationship combinations. CALCULATE (SELECTEDMEASURE(),USERELATIONSHIP())
 6 (3) Conditional Formatting. SELECTEDMEAUSURE(), SELECTEDMEASURENAME() with dummy measure.  example has fixed grouping (e.g., year/quarter for min/max OR < Average, etc). Dummy measure for each measure that is used for conditional formatting. Need different item (group?) for visuals with different LOD
 */
+
+004
+//String of selected dimensions
+//!DAX
+//!Measure
+//Use CONCATENATEX to return a string of the selected dimensions
+: CONCATENATEX(VALUES([dimension]),[dimension],[delimiter],[dimension for order], [order direction])
