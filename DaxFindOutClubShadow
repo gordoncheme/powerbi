@@ -1,1 +1,7 @@
-
+Chapter 7
+-(Gordon) table is evaluated before; iterator is evaluated in row context of the expression.  Some functions without '%X' are also iterators; see '!resources'
+-(Gordon) iterator cardinality - the number of rows being iterated. Depends on # rows in tables, inner/outer, relationships, measures in other measures; can be combinatorial or if written better, only be the cardinality of the inner table. Avoid nested iterators if cardinality of outer iterators is very large
+-(Gordon) nested iterations with measures leverages the implicit CALCULATE in measures to do context transition
+-(Gordon) avoid measure references in large iterators
+-(Gordon) Iterator equirements: (1) define granularity (2) define expression to evaluate @ granularity (3) kind of aggregation
+-(Gordon) Trick: use CONCATENATEX to return a string of the selected dimensions: CONCATENATEX(VALUES([dimension]),[dimension],[delimiter],[dimension for order], [order direction])
