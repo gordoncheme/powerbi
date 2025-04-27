@@ -23,3 +23,6 @@ year back in timeF
 6 can nest time intelligence functions.  e.g., YTD for least year. Be mindful of table.dates limits, and impacts of nesting calcs.  otherwise, can return empty table equivalent to blank scalar
 6 Moving Annual Total (MAT) --> DATESINPERIOD()
 6 can nest time intelligence functions.  e.g., YTD for least year. Be mindful of table.dates limits, and impacts of nesting calcs.  otherwise, can return empty table equivalent to blank scalar
+6 semi-additive values use different types of aggregations when sliced by different columns (e.g., Sum & last date like a bank account balance)
+  --DETAILS!  LASTDATE() returns the last date in the date table, always.  use LASTNONBLANK('date'[Date],COUNTROWS(RELATEDTABLE(<fact table>))) to get the last date
+  --e.g., different last dates, either the last date with any data applies to all, or each last date is unique.  To aggregate in the latter case, iterate on the unique dimension (e.g., customer)
