@@ -10,6 +10,11 @@
     {OTHER COLUMNS}
   )
 6 DATEADD(<dates>, <number_of_intervals>, <interval>) Moves a date by a specific intervalF
+6 for DATEADD(), the table.Dates should have complete years
+--(1) DATEADD only returns days that exist in the date column
+--(2) if a day does not exist in the corresponding month afer the shifting operation, then the result of DATEADD includes the last day of the corresponding month
+--(3) If the selection includes the last two days of a month, then the result of DATEADD includes all the dateys between the days in the shifted month and the end of the shifted month
+--Watch out for weekdays and DATEADD
 6 DATESBETWEEN(<dates>, <date_1>, <date_2>) Returns the dates between specified datesF
 6 DATESYTD(<dates> [,<year_end_date>]) Returns a table that contains a column of the dates for the year to date, in the current context.
 6 TOTALYTD(<expression>, <dates>[, <filter>][, <year_end_date>]) Evaluates the year-to-date 
@@ -28,4 +33,3 @@ year back in timeF
   --e.g., different last dates, either the last date with any data applies to all, or each last date is unique.  To aggregate in the latter case, iterate on the unique dimension (e.g., customer)
 6 opening and closing balances suffer from same LASTDATE() issues.  LASTNONBLANK solution from above is recommended
 6 Context transition for time intelligence functions occurs only when a date column is specified as a column reference
-6 for DATEADD(), the table.Dates should have complete years
