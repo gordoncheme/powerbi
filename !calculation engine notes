@@ -39,4 +39,4 @@
 
 6 TIME INTELLIGENCE NOTES
 -DAX automatically adds ALL() to table.Dates when filter is applied to type.Date or type.DateTime column.  MARK AS DATE TABLE TO ENABLE THIS. WORKS EVEN IF RELATIONSHIP USES [datekey] TYPE COLUMN
--
+-Context transition for time intelligence functions occurs only when a date column is specified as a column reference
