@@ -22,3 +22,4 @@ year back in timeF
 6 PARALLELPERIOD(<dates>,<number_of_intervals>,<interval>) Returns a table that contains a column of dates that represents a period parallel to the dates in the specified dates column, in the current context, with the dates shifted a number of intervals either forward in time or back in time.  THE FULL PERIOD
 6 can nest time intelligence functions.  e.g., YTD for least year. Be mindful of table.dates limits, and impacts of nesting calcs.  otherwise, can return empty table equivalent to blank scalar
 6 Moving Annual Total (MAT) --> DATESINPERIOD()
+6 can nest time intelligence functions.  e.g., YTD for least year. Be mindful of table.dates limits, and impacts of nesting calcs.  otherwise, can return empty table equivalent to blank scalar
