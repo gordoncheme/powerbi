@@ -1,4 +1,4 @@
-Chapter 7
+Chapter 7 Iterators and CALCULATE
 -(Gordon) table is evaluated before; iterator is evaluated in row context of the expression.  Some functions without '%X' are also iterators; see '!resources'
 -(Gordon) iterator cardinality - the number of rows being iterated. Depends on # rows in tables, inner/outer, relationships, measures in other measures; can be combinatorial or if written better, only be the cardinality of the inner table. Avoid nested iterators if cardinality of outer iterators is very large
 -(Gordon) nested iterations with measures leverages the implicit CALCULATE in measures to do context transition
@@ -9,3 +9,27 @@ Chapter 7
 -(Gordon) AVERAGEX() for moving averages; blanks are skipped! Can also use DIVIDE([total to use], [count of periods])
 -(Gordon) RANKX() (1) lookup table iterated over first parameter, sorted lookup table of values (2) evaluate 2nd parameter in OG eval context (3) Position of value in 2nd step based on lookup table from 1st step.  Wrap in HASONEVALUE() to not show totals.  Use 1st and 3rd param for lookup table (1st) and value to rank (2nd). 4th param to set the order. 5th param to handle ties (DENSE, SKIP).  Use ALL() or ALLEXCEPT() for lookup table to ensure all are included either without filters or with them, depending on desired result
 -(Gordon) can iterate over higher levels of granularity, e.g. checking or quantity of something at the month level and dividing total by that count. Watch totals, that the LOD is proper (e.g. includes year and month)
+
+Chapter 8 Time Intelligence
+-(Gordon) book recommends pbix "auto date/time" off so that new shadow table not created for every date in the model
+-(Gordon) a way to make a date table is to filter CALENDARAUTO to applicable date range, then ADDCOLUMNS for other date dimensions.  See page 223
+-(Gordon) with multiple dates (1) one date table w/ multiple relationships (2) one date table for each.  Go with (1) unless want to matricize different dates, then use (2).  Use Calc Groups to reduce measure count using (1)
+-(Gordon) got to understand the hard way to do date calcs because DAX doesn't have built in ways to do everything
+-(Gordon) Order of Ops: (1) determine new filter for the date (2) apply new filter context before computing the measure
+-(Gordon) DAX automatically adds ALL() to table.Dates when filter is applied to type.Date or type.DateTime column.  MARK AS DATE TABLE TO ENABLE THIS. WORKS EVEN IF RELATIONSHIP USES [datekey] TYPE COLUMN
+-(Gordon) All time intelligence functions in DAX apply a filter condition on the date column of a table.Dates
+-(Gordon) menagerie of functions, DATESYTD etc.  book prefers CALCULATE(<expression>,DATEADD([date],-1,<interval>)) to SAMEPERIODLASTYEAR due to flexibility
+-(Gordon) can nest time intelligence functions.  e.g., YTD for least year. Be mindful of table.dates limits, and impacts of nesting calcs.  otherwise, can return empty table equivalent to blank scalar
+-(Gordon) Moving Annual Total (MAT) --> DATESINPERIOD()
+-(Gordon) semi-additive values use different types of aggregations when sliced by different columns (e.g., Sum & last date like a bank account balance)
+  --DETAILS!  LASTDATE() returns the last date in the date table, always.  use LASTNONBLANK('date'[Date],COUNTROWS(RELATEDTABLE(<fact table>))) to get the last date
+  --e.g., different last dates, either the last date with any data applies to all, or each last date is unique.  To aggregate in the latter case, iterate on the unique dimension (e.g., customer)
+-(Gordon) opening and closing balances suffer from same LASTDATE() issues.  LASTNONBLANK solution from above is recommended
+-(Gordon) Context transition for time intelligence functions occurs only when a date column is specified as a column reference
+-(Gordon) for DATEADD(), the table.Dates should have complete years
+--(1) DATEADD only returns days that exist in the date column
+--(2) if a day does not exist in the corresponding month afer the shifting operation, then the result of DATEADD includes the last day of the corresponding month
+--(3) If the selection includes the last two days of a month, then the result of DATEADD includes all the dateys between the days in the shifted month and the end of the shifted month
+--Watch out for weekdays and DATEADD
+-(Gordon) FIRSTDATE/LASTDATE: return table and perform context transition. LASTNONBLANK/FIRSTNONBLANK: iterators and return first/last scalar parameter is not a blank
+-(Gordon) Drill Through --> use CALCULATETABLE () because dt only considers filter context from rows, columns, filters, slices and NOT by the measure itself
