@@ -1,9 +1,22 @@
+6 Dates =
+  VAR MinYear = YEAR (MIN(sales[Order Date])
+  VAR MaxYear = YEAR (MAX(sales[Order Date])
+  RETURN
+  ADDCOLUMNS
+    (FILTER
+      (CALENDARAUTO(),
+      YEAR ([Date]) >= MinYear &&
+      YEAR ([Date]) <= MaxYear),
+    {OTHER COLUMNS}
+  )
 6 DATEADD(<dates>, <number_of_intervals>, <interval>) Moves a date by a specific intervalF
 6 DATESBETWEEN(<dates>, <date_1>, <date_2>) Returns the dates between specified datesF
+6 DATESYTD(<dates> [,<year_end_date>]) Returns a table that contains a column of the dates for the year to date, in the current context.
 6 TOTALYTD(<expression>, <dates>[, <filter>][, <year_end_date>]) Evaluates the year-to-date 
-value of the expression in the current contextF
+value of the expression in the current context
 6 SAMEPERIODLASTYEAR(<dates>) Returns a table that contains a column of dates shifted one 
 year back in timeF
 6 STARTOFMONTH(<dates>) // ENDOFMONTH(<dates>) Returns the start // end of the monthF
 6 STARTOFQUARTER(<dates>) // ENDOFQUARTER(<dates>) Returns the start // end of the quarterF
 6 STARTOFYEAR(<dates>) // ENDOFYEAR(<dates>) Returns the start // end of the quarter.
+6 PARALLELPERIOD(<dates>,<number_of_intervals>,<interval>) Returns a table that contains a column of dates that represents a period parallel to the dates in the specified dates column, in the current context, with the dates shifted a number of intervals either forward in time or back in time.  THE FULL PERIOD
