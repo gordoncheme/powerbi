@@ -33,3 +33,5 @@ year back in timeF
   --e.g., different last dates, either the last date with any data applies to all, or each last date is unique.  To aggregate in the latter case, iterate on the unique dimension (e.g., customer)
 6 opening and closing balances suffer from same LASTDATE() issues.  LASTNONBLANK solution from above is recommended
 6 Context transition for time intelligence functions occurs only when a date column is specified as a column reference
+6 FIRSTDATE/LASTDATE: return table and perform context transition. LASTNONBLANK/FIRSTNONBLANK: iterators and return first/last scalar parameter is not a blank
+6 Drill Through --> use CALCULATETABLE () because dt only considers filter context from rows, columns, filters, slices and NOT by the measure itself
