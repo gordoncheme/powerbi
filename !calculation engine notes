@@ -37,4 +37,6 @@
 5. CALCULATE evaluates all the explicit filter arguments in the original filter context. It applies their result to the new filter context generated after step 4. These filter arguments are applied to the new filter context once the context transition has happened so they can overwrite it, after filter removal—their filter is not removed by any ALL* modifier—and after the relationship architecture has been updated. However, the evaluation of filter arguments happens in the original filter context, and it is not affected by any other modifier or filter within the same CALCULATE function. The filter context generated after point (5) is the new filter context used by CALCULATE in the evaluation of its expression.
 ******************/
 
-6 
+6 TIME INTELLIGENCE NOTES
+-DAX automatically adds ALL() to table.Dates when filter is applied to type.Date or type.DateTime column.  MARK AS DATE TABLE TO ENABLE THIS. WORKS EVEN IF RELATIONSHIP USES [datekey] TYPE COLUMN
+-
