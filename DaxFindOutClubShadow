@@ -33,3 +33,6 @@ Chapter 8 Time Intelligence
 --Watch out for weekdays and DATEADD
 -(Gordon) FIRSTDATE/LASTDATE: return table and perform context transition. LASTNONBLANK/FIRSTNONBLANK: iterators and return first/last scalar parameter is not a blank
 -(Gordon) Drill Through --> use CALCULATETABLE () because dt only considers filter context from rows, columns, filters, slices and NOT by the measure itself
+
+Chapter 9 Calculation Groups
+-(Gordon) 
