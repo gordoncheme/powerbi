@@ -43,3 +43,17 @@
 //!Measure
 //Use CONCATENATEX to return a string of the selected dimensions
 : CONCATENATEX(VALUES([dimension]),[dimension],[delimiter],[dimension for order], [order direction])
+
+005
+//Visual Calculations for conditional formatting
+//!DAX
+//!Visual Calculation
+//Use visual calculation for conditional formatting instead of a measure
+Color =
+VAR AvgValue =
+    AVERAGEX ( ROWS, [Sales Amount] )
+VAR Result =
+    IF ( [Sales Amount] >= AvgValue, "Green", "Red" )
+RETURN
+    Result
+//https://www.sqlbi.com/articles/using-visual-calculations-for-conditional-formatting/
