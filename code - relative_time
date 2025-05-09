@@ -67,7 +67,7 @@ MonthDisplay = FORMAT(DATE(dimRelative_Months[Year],dimRelative_Months[Month],1)
 //!DAX
 //!DAX table with DAX columns
 //Make the table (copy of existing date table maybe?), then add the columns.  This is a full table of dates that includes the relative month column.  Could probably also just add the relativemonth column (and its supporting columns) to the primary date table.  I liked to have the relative months small table separate like 004
-_Date Tables = CALENDAR(EOMONTH(today(),-2)+1, EOMONTH(today(),3))
+_Date Tables = CALENDAR(EOMONTH(today(),-2)+1, EOMONTH(today(),3))  //back 2 months, forward three months
 MMM YYYY = FORMAT('_Date Tables'[Date],"MMM-YY")
 YYYYMM = FORMAT('_Date Tables'[Date],"YYYYMM")
 Year = year('_Date Tables'[Date])
