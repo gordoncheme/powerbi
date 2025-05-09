@@ -57,7 +57,7 @@ RelativeMonthDAX =
     VAR res=((CurrentYear-ReferenceYear)*12)+(CurrentMonth-ReferenceMonth)+1
     return res
 MonthDisplay = FORMAT(DATE(dimRelative_Months[Year],dimRelative_Months[Month],1), "mmm-yy")
-//Relate to primary date table on date column [DateYrMth]
+//Relate to primary date table on new column [DateYrMth]
 //Use RelativeMonthDAX as the slicer 
 //Use RelativeMonth as a column header (had an issue when using 0 as the column header (or maybe the relationship on [relativemonth] before?), which is the RelativeMonthDAX relative month . . this can probably be improved but it works)
 //CAUTION M Code is tied to the Semantic M code side of "today" and the DAX columns are tied to the DAX's version of "today".  Possible risk of getting the two relative months out of sync, could have impacts
@@ -66,7 +66,7 @@ MonthDisplay = FORMAT(DATE(dimRelative_Months[Year],dimRelative_Months[Month],1)
 //Relative Months Date Table - DAX
 //!DAX
 //!DAX table with DAX columns
-//Make the table (copy of existing date table maybe?), then add the columns.  This is a full table of dates that includes the relative month column.  Could probably also just add the relativemonth column (and its supporting columns) to the primary date table
+//Make the table (copy of existing date table maybe?), then add the columns.  This is a full table of dates that includes the relative month column.  Could probably also just add the relativemonth column (and its supporting columns) to the primary date table.  I liked to have the relative months small table separate like 004
 _Date Tables = CALENDAR(EOMONTH(today(),-2)+1, EOMONTH(today(),3))
 MMM YYYY = FORMAT('_Date Tables'[Date],"MMM-YY")
 YYYYMM = FORMAT('_Date Tables'[Date],"YYYYMM")
