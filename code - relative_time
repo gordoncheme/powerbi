@@ -32,3 +32,49 @@ RETURN
 //Applied Step - Rename Column:  "Last Refresh"
 //Applied Step - Change Type:  datetime
 
+//004
+//Relative Months - Mcode + DAX
+//!M-Code w/ DAX
+//!M-Code table with DAX columns
+//Use M-Code to make the initial relative months table; Use DAX to add some columns
+//See 005 for all DAX, date table
+//M-Code
+let
+    Source = Sql.Database("ref-mc1-shared-prd-1-sqmi.ce994f3dcc4b.database.windows.net", "Refining_OLAP", [Query="WITH RelativeDateCTE AS (#(lf)   SELECT YEAR(DATEADD(MONTH, -1, GETDATE())) AS Year, MONTH(DATEADD(MONTH, -1, GETDATE())) AS Month,-2 AS RelativeMonth#(lf)   UNION ALL#(lf)   SELECT YEAR(GETDATE()), MONTH(GETDATE()), -1#(lf)--use (-1) because 0 return all of the blank months in the relationship when used in viz#(lf)    UNION ALL#(lf)    SELECT YEAR(DATEADD(MONTH, 1, GETDATE())), MONTH(DATEADD(MONTH, 1, GETDATE())), 1#(lf)    UNION ALL#(lf)    SELECT YEAR(DATEADD(MONTH, 2, GETDATE())), MONTH(DATEADD(MONTH, 2, GETDATE())), 2#(lf)#(tab)UNION ALL#(lf)    SELECT YEAR(DATEADD(MONTH, 3, GETDATE())), MONTH(DATEADD(MONTH, 3, GETDATE())), 3#(lf))#(lf)SELECT * FROM RelativeDateCTE;"]),
+    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Year", type text}, {"Month", type text}, {"RelativeMonth", type text}}),
+    #"Added Custom" = Table.AddColumn(#"Changed Type", "DateYrMonth", each [Year]&[Month]),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"Year", Int64.Type}, {"Month", Int64.Type}, {"RelativeMonth", Int64.Type}})
+in
+    #"Changed Type1"
+//DAX Calculated Columns
+MonthDAX = FORMAT(DATE(dimRelative_Months[Year],dimRelative_Months[Month],1), "mm")
+DateYrMonthDAX = dimRelative_Months[Year]&dimRelative_Months[MonthDAX]
+RelativeMonthDAX = 
+    VAR ReferenceYear=year(TODAY())
+    VAR ReferenceMonth=MONTH(TODAY())
+    VAR CurrentYear= [Year]
+    VAR CurrentMonth= [Month]
+    VAR res=((CurrentYear-ReferenceYear)*12)+(CurrentMonth-ReferenceMonth)+1
+    return res
+MonthDisplay = FORMAT(DATE(dimRelative_Months[Year],dimRelative_Months[Month],1), "mmm-yy")
+//Use RelativeMonthDAX as the slicer 
+
+//005
+//Relative Months Date Table - DAX
+//DAX
+//!DAX table with DAX columns
+//Make the table, then add the columns
+_Date Tables = CALENDAR(EOMONTH(today(),-2)+1, EOMONTH(today(),3))
+MMM YYYY = FORMAT('_Date Tables'[Date],"MMM-YY")
+YYYYMM = FORMAT('_Date Tables'[Date],"YYYYMM")
+Year = year('_Date Tables'[Date])
+Month = MONTH('_Date Tables'[Date])
+RelativeMonth = 
+    VAR ReferenceYear=year(TODAY())
+    VAR ReferenceMonth=MONTH(TODAY())
+    VAR CurrentYear= YEAR([Date])
+    VAR CurrentMonth=MONTH([Date])
+    VAR res=((CurrentYear-ReferenceYear)*12)+(CurrentMonth-ReferenceMonth)+1
+    return res
+//Connect to primary Date table on [Date]
+//Use RelativeMonthDAX as the slicer 
