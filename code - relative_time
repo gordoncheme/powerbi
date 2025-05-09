@@ -57,6 +57,7 @@ RelativeMonthDAX =
     VAR res=((CurrentYear-ReferenceYear)*12)+(CurrentMonth-ReferenceMonth)+1
     return res
 MonthDisplay = FORMAT(DATE(dimRelative_Months[Year],dimRelative_Months[Month],1), "mmm-yy")
+//Relate to primary date table on date column [DateYrMth]
 //Use RelativeMonthDAX as the slicer 
 
 //005
@@ -76,5 +77,5 @@ RelativeMonth =
     VAR CurrentMonth=MONTH([Date])
     VAR res=((CurrentYear-ReferenceYear)*12)+(CurrentMonth-ReferenceMonth)+1
     return res
-//Connect to primary Date table on [Date]
+//Relate to primary Date table on [Date]
 //Use RelativeMonthDAX as the slicer 
