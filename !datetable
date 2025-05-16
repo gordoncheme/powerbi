@@ -1,1 +1,84 @@
 //001
+//DateTabe
+//!DAX
+//!CalcTable
+//[notes]
+DateTable = 
+
+ADDCOLUMNS(
+
+    //Basic Calendar Fields
+
+    CALENDARAUTO(),
+
+    "DateKey", INT(FORMAT([Date], "YYYYMMDD")),
+
+    "Year", YEAR([Date]),
+
+    "Month", MONTH([Date]),
+
+    "Day", DAY([Date]),
+
+ 
+
+    //Fields About Months
+
+    "Month Name", FORMAT([Date], "MMMM"),
+
+    "Month Short", FORMAT([Date], "MMM"),
+
+    "Month Sort", MONTH([Date]),
+
+    "Year-Month", FORMAT([Date], "YYYY-MM"),
+
+    "Month Year Short Label", FORMAT([Date], "MMM YYYY"),  -- e.g., Jan 2023
+
+    "Month Year Label", FORMAT([Date], "MMMM YYYY"), -- e.g., January 2023
+
+    "Month Year Sort", YEAR([Date]) * 100 + MONTH([Date]),  -- e.g., 202301
+
+ 
+
+    //Fields about Quarters
+
+    "Quarter", "Q" & FORMAT([Date], "Q"),
+
+    "Quarter Number", QUARTER([Date]),
+
+    "Quarter Year Label", "Q" & FORMAT([Date], "Q") & " " & FORMAT([Date], "YYYY"),
+
+    "Quarter Year Sort", YEAR([Date]) * 10 + QUARTER([Date]),
+
+ 
+
+    // Fields about Days
+
+    "Day of Week", WEEKDAY([Date], 2),  -- 1=Sun, 2=Mon
+
+    "Day Name", FORMAT([Date], "dddd"),
+
+    "Day Short", FORMAT([Date], "ddd"),
+
+    "Is Weekend", IF(WEEKDAY([Date], 2) >= 6, TRUE(), FALSE()),
+
+    "Is Weekday", IF(WEEKDAY([Date], 2) <= 5, TRUE(), FALSE()),
+
+ 
+
+    //Fields about Weeks  --could be in error
+
+    "Week Number", WEEKNUM([Date], 2),  -- ISO-style week number
+
+    "ISO Week", WEEKNUM([Date], 21),   -- 21 = ISO week start
+
+ 
+
+    //Fields about Relative Time
+
+    "Is Today", IF([Date] = TODAY(), TRUE(), FALSE()),
+
+    "Is Current Month", IF(YEAR([Date]) = YEAR(TODAY()) && MONTH([Date]) = MONTH(TODAY()), TRUE(), FALSE()),
+
+    "Is Current Year", IF(YEAR([Date]) = YEAR(TODAY()), TRUE(), FALSE())
+
+)
