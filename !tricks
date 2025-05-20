@@ -57,3 +57,13 @@ VAR Result =
 RETURN
     Result
 //https://www.sqlbi.com/articles/using-visual-calculations-for-conditional-formatting/
+
+006
+//Hide Visual under condition with mask shape
+//!DAX
+//!Measure
+//Use a shape with a DAX measure to determine it's background color.  Then place that shape over the visual to show/hide
+mask_transparency = IF([CountRows.PnLClaims.NoVessel] > 0,"#FFFFFF00","#FAFAFA")
+//Determine your condition
+//The first color is transparent, the other matches the CD&I Tyler's team theme color page background
+//Use this measure to determine the background color of a rectangle that you place over the visual you want to show or hide based on conditions
