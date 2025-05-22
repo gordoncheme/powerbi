@@ -4,4 +4,6 @@
 6 ALLNOBLANKROW(<table> | <column>[, <column>[, <column>[,…]]]) Returns a table that is a subset of another table or expressionF
 6 ALL([<table> | <column>[, <column>[, <column>[,…]]]]) Returns all the rows in a table, or all the values in a column, ignoring any filters that might have been appliedF
 6 ALLEXCEPT(<table>, <column>[, <column>[,..]]) Returns all the rows in a table except for those rows that are affected by the specified column filtersF
-6 REMOVEFILTERS([<table> | <colum
+6 REMOVEFILTERS([<table> | <column>[, <column>[, <column>[,…]]]]) Clear filters from the specified tables or columns.
+6 LOOKUPVALUE(<result_columnName>, <search_columnName>, <search_value>[, <search2_columnName>, <search2_value>]…[, <alternateResult>]) Returns the value for the row that meets all criteria specified by one or more search conditions.
+6
