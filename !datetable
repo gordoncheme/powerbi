@@ -3,7 +3,7 @@
 //!DAX
 //!CalcTable
 //[notes]
-DateTable = 
+DateTable =
 
 ADDCOLUMNS(
 
@@ -65,11 +65,15 @@ ADDCOLUMNS(
 
  
 
-    //Fields about Weeks  --could be in error
+    //Fields about Weeks
 
-    "Week Number", WEEKNUM([Date], 2),  -- ISO-style week number
+    "Week Num", WEEKNUM([Date], 1),
 
-    "ISO Week", WEEKNUM([Date], 21),   -- 21 = ISO week start
+    "Week Num (ISO)", WEEKNUM([Date], 21),  
+
+    "Week Start", [Date]-WEEKDAY([Date],1) + 1,
+
+    "Week End", [Date]-WEEKDAY([Date],1) + 7,
 
  
 
@@ -82,3 +86,5 @@ ADDCOLUMNS(
     "Is Current Year", IF(YEAR([Date]) = YEAR(TODAY()), TRUE(), FALSE())
 
 )
+
+ 
