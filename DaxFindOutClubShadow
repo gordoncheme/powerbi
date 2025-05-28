@@ -35,4 +35,17 @@ Chapter 8 Time Intelligence
 -(Gordon) Drill Through --> use CALCULATETABLE () because dt only considers filter context from rows, columns, filters, slices and NOT by the measure itself
 
 Chapter 9 Calculation Groups
+-(Gordon) Bottom line - define calculation items in calculation groups to apply the same transformation steps to different data items
+-(Gordon) Tabular Editor a way to create Calc Groups, which is a special kind of table with a shown column (e.g., Formula) and a hidden column (e.g., Ordinal), and a folder with the items in tab editor
+--Give the group (table) a name
+--Name the Calc Item per the transformation
+--DAX expression replaces the measure in the report when you apply the calc item
+--Use SELECTEDMEASURE() in place of the specified measure when defining the calc item
+--Sideways recursion (referencing a calc item) not recommended
+--calc items sit in a column of the calc groups table 
+-(Gordon) Place the measure in the values of the matrix and the calc item column on columns to get report
+-(Gordon) good idea to have a "Current" calc item in the calc group to show the current value with the other calculations
+-(Gordon) Sort Order by arranging the calc items in tab editor, which sets the Ordinal and the sort order
+-(Gordon) formatting --> there is a format string property available for the calc item
+-(Gordon) Best practices (1) use CG's to modify the behavior of expressions consisting of one measure only (2) Avoid using sideways recursion that users can get to, and be cautious in general so that full recursion doesn't happen which causes errors
 -(Gordon) 
