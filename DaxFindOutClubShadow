@@ -48,3 +48,16 @@ Chapter 9 Calculation Groups
 -(Gordon) Sort Order by arranging the calc items in tab editor, which sets the Ordinal and the sort order
 -(Gordon) formatting --> there is a format string property available for the calc item. A calculation item can override both the calculation logic and format of a measure
 -(Gordon) Best practices (1) use CG's to modify the behavior of expressions consisting of one measure only (2) Avoid using sideways recursion that users can get to, and be cautious in general so that full recursion doesn't happen which causes errors
+
+Chapter 10 Working with filter context
+-(Gordon) check for formulas for filter context compatibility 
+-(Gordon) HASONEVALUE(), SELECTEDVALUE()
+-(Gordon) A column is cross-filtered if there is a filter that may reduce its set of visible values, either or a direct or indirect filter. ISCROSSFILTERED().  Filtered = Crossfiltered (column), but Crossfiltered <>always Filtered (column).  Use ISCROSSFILTERED() with a table
+-(Gordon) VALUES() returns the values visible in the filter context
+-(Gordon) FILTERS() returns the values that are currently being filtered by the filter context.  Didn't work in power bi with SUMMARIZECOLUMNS(), but may work now. HASONEFILTER()
+-(Gordon) Check for full visibility with a row count. ALL([filter column]) - only works for that column - or ALLEXCEPT([Grouping column]) - only works if that column is grouping and is a filter that can be retained. ALLEXCEPT alternative - CALCULATE([Measure], ALL ('table'), VALUES([Grouping Column])). VALUES() will work when [Grouping column] is cross filtered
+-(Gordon) ALL* functions only remove filters, not add
+-(Gordon) ALL* as calc modifier to avoid CT because calc modifiers applied after CT. Use in calc columns for totals (e.g., denominators)
+-(Gordon) ISEMPTY() to determine if a table has no values visible in the current filter context
+-(Gordon) Data Lineage on table columns, not in expressions. TREATAS to apply data lineage to anonymous table: TREATAS('table', [column1withlineage], [column2withlineage], ...)
+-(Gordon) An Arbitrarily Shaped Filter is any filter that cannot be expressed as a simple filter (which is a set of column filters); can be done through code or through (heirarchy) slicers. Watch for calculate killing the original shape of the arbitrary filter.  Use iterated columns that don't do that (e.g., [MonthYear] not [Month]), or use KEEPFILTERS() to keep the arbitrary. 
