@@ -62,7 +62,11 @@ Chapter 10 Working with filter context
 -[Gordon] Data Lineage on table columns, not in expressions. TREATAS to apply data lineage to anonymous table: TREATAS('table', [column1withlineage], [column2withlineage], ...)
 -[Gordon] An Arbitrarily Shaped Filter is any filter that cannot be expressed as a simple filter (which is a set of column filters); can be done through code or through (hierarchy) slicers. Watch for calculate killing the original shape of the arbitrary filter.  Use iterated columns that don't do that (e.g., [MonthYear] not [Month]), or use KEEPFILTERS() to keep the arbitrary. 
 
-Chapter 11 Handling heirarchies
--[Gordon] In a single meausure for PctOfParent, IF statements should proceed from inner to outer
-
-
+Chapter 11 Handling hierarchies
+-[Gordon] In a single measure for PctOfParent, IF statements (e.g., HASONEVALUE() )should proceed from inner to outer
+-[Gordon] PATH() function. PATH(<ID_columnName>, <parent_columnName>); Returns a delimited text string with the identifiers of all the parents of the current identifier, starting with the oldest and continuing until current.
+--Use with PATHITEM () to return the Item in the hierarchy at different levels.  PATHITEM(<path>, <position>[, <type>]); Returns the item at the specified position from a string resulting from evaluation of a PATH function. Positions are counted from left to right.
+-[Gordon] Use PATHLENGTH(<path>); Returns the number of parents to the specified item in a given PATH result, including sel; to clear blanks from different levels in hierarchy table.  See pg 354 in DAX book.  aka [NodeDepth]
+-[Gordon] Combine [NodeDepth] with [BrowseDepth] (SUM(ISINSCOPE()) across all levels) to define a measure that blanks out values for levels that are too deep for the object
+-[Gordon] Find Leaves (objects w/no children), and implement a measure that shows the value of the object itself nested in its hierarchy.  See pp 360-361.  Hide Members to hide blank members, in tabular editor, but could not find
+-[Gordon] INFO: Unary operators in DAX hierarchies define how each child member contributes to its parent’s total—typically using symbols like + (add child value to parent), - (subtract child value from parent), or ~ (do not include child in parent total) to indicate addition, subtraction, or exclusion from aggregation.
