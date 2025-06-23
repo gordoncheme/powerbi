@@ -61,3 +61,8 @@ Chapter 10 Working with filter context
 -[Gordon] ISEMPTY() to determine if a table has no values visible in the current filter context
 -[Gordon] Data Lineage on table columns, not in expressions. TREATAS to apply data lineage to anonymous table: TREATAS('table', [column1withlineage], [column2withlineage], ...)
 -[Gordon] An Arbitrarily Shaped Filter is any filter that cannot be expressed as a simple filter (which is a set of column filters); can be done through code or through (hierarchy) slicers. Watch for calculate killing the original shape of the arbitrary filter.  Use iterated columns that don't do that (e.g., [MonthYear] not [Month]), or use KEEPFILTERS() to keep the arbitrary. 
+
+Chapter 11 Handling heirarchies
+-[Gordon] In a single meausure for PctOfParent, IF statements should proceed from inner to outer
+
+
