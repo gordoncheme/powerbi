@@ -70,3 +70,6 @@ Chapter 11 Handling hierarchies
 -[Gordon] Combine [NodeDepth] with [BrowseDepth] (SUM(ISINSCOPE()) across all levels) to define a measure that blanks out values for levels that are too deep for the object
 -[Gordon] Find Leaves (objects w/no children), and implement a measure that shows the value of the object itself nested in its hierarchy.  See pp 360-361.  Hide Members to hide blank members, in tabular editor, but could not find
 -[Gordon] INFO: Unary operators in DAX hierarchies define how each child member contributes to its parent’s total—typically using symbols like + (add child value to parent), - (subtract child value from parent), or ~ (do not include child in parent total) to indicate addition, subtraction, or exclusion from aggregation.
+
+Chapter 12 Working with Tables
+-[Gordon] 
