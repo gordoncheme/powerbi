@@ -72,4 +72,5 @@ Chapter 11 Handling hierarchies
 -[Gordon] INFO: Unary operators in DAX hierarchies define how each child member contributes to its parent’s total—typically using symbols like + (add child value to parent), - (subtract child value from parent), or ~ (do not include child in parent total) to indicate addition, subtraction, or exclusion from aggregation.
 
 Chapter 12 Working with Tables
--[Gordon] 
+-[Gordon] CALCULATETABLE(<table>, <filter1>, <filter2>, ...) | FILTER does not change the filter context, where CALCULATETABLE does
+
