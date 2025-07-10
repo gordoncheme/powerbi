@@ -78,3 +78,5 @@ Chapter 12 Working with Tables
 -[Gordon] CALCULATETABLE can only apply fi lters to columns that belong to the data model; FILTER can filter on a measure
 -[Gordon] ADDCOLUMNS(), SUMMARIZE(), CROSSJOIN(), UNION(), INTERSECT(), EXCEPT()
 -[Gordon] SUMMARIZE() can "add columns" for aggregations grouped by the SUMMARIZE() columns, but this functionality is deprecated because SUMMARIZE creates one row context and one filter context at the same time.  !!!Use ADDCOLUMNS() and SUMMARIZE() together instead because then there is one row context used in a context transition!!!
+-[Gordon] Use CROSSJOIN() for "OR" type efficient measures, or to obtain possible combinations for "things that didn't happen"
+-[Gordon] UNION() has no lineage unless the lineage of the input tables is the same, can add lineage using TREATAS()
