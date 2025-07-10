@@ -1,5 +1,6 @@
 6 SUMMARIZE(<table>, <groupBy_columnName>[, <groupBy_columnName>]…[, <name>, <expression>]…)
- Returns a summary table for the requested totals over a set of groupsF
+ Returns a summary table for the requested totals over a set of groups. It scans a table (its fi rst argument),
+grouping columns of the same or other related tables in groups of one or more.F
 6 DISTINCT(<table>) Returns a table by removing duplicate rows from another table or 
 expressionF
 6 ADDCOLUMNS(<table>, <name>, <expression>[, <name>, <expression>]…) Adds calculated columns to the given table or table expression. returns all the rows and columns of its fi rst argument, adding newly created columns to the output.
@@ -10,3 +11,4 @@ expressionF
 6 NATURALLEFTOUTERJOIN(<left_table>, <right_table>) Joins two tables using a left outer joinF
 6 UNION(<table>, <table>[, <table> [,…]]) Returns the union of tables with matching columns.
 6 EXCEPT(<table_expression1>, <table_expression2>) Returns a table that contains the rows of one table (1) minus all the rows of another table (2).
+6 CALCULATETABLE(<expression>[, <filter1> [, <filter2> [, …]]]) Evaluates a table expression in a modified filter context.
