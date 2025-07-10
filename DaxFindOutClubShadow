@@ -1,3 +1,144 @@
+Chapter 2 Introducing DAX
+-[Tyler] Probably not a surprise for anyone but I really liked the recommendations for formatting DAX calculations. A few I liked the most:
+--Use table name with Column references but not with Measure references — NOTE: if Measures are in their own table, this helps
+--Use tabs/indentations based on parentheses so you know which ones go with which function calls — NOTE: Bravo will format your measures for you
+--To add a new line hit Shift+Enter… I have always used Alt+Enter so maybe both work?
+-[Tyler] Use SWITCH with an opening TRUE statement to replicate a series of “Else If” statements – for me this will be used a lot
+-[Tyler] In calculations that cross table fields, use RELATED (or RELATEDTABLE) to grab fields from other tables where there is a relationship
+-[Gordon] Variant data type not allowed for regular table columns. Important to remember
+-[Gordon] They recommend against intermediate calculated columns (RAM cost) → Iterators
+-[Gordon] When using variables, errors must be checked at the time of variable definition rather than where we use them
+-[Gordon] ISNUMBER etc. is based on column type, doesn’t tell you if it is convertible in DAX
+-[Kaylee] If grand totals are wrong, use a measure instead of a column
+-[Kaylee] Try to avoid using IFERROR as it may cause problems in the code
+-[Kaylee] COUNTROWS requires a table as a parameter, not a column
+-[Melanie] If you can express a calculation with either a calculated column or a measure, the measure is the preferred way to go
+-[Melanie] Can use DAX Formatter by SQLBI to copy and paste formulas and get a nice format
+-[Melanie] Fun one ... the Leap Year bug ... can’t believe this is still carrying forward!
+-[Ann] DAX automatically converts strings into numbers and numbers into strings whenever required
+--Ex: 5 & 4 returns an integer 54
+--“5” + “4” returns a value of 9
+-[Ann] Use VAR to better organize your large calculations for better formatting
+--This is something I see people using VAR instead of IF statements
+-[Rachel] Measure := Calculated Columns =
+--:= makes it easier to differentiate between measures and calculated columns
+-[Rachel] Rule of thumb: use a measure instead of a calculated column when both options are possible
+-[Alex] IFERROR has performance costs. We should do our own checks with SWITCH(TRUE(),...) statements (greater than zero, etc.)
+
+Chapter 3 Understanding basic table functions
+-[Tyler] Iterator functions allow you to pass in table functions that define the table to perform the calculations on. In my mind this is very similar to the LOD calculations in Tableau where the calculation is performed on a different “table” than what is displayed on the screen.
+-[Tyler] ALL returns all rows of a table regardless of report filters – this seems like FIXED from Tableau.
+--ALLEXCEPT, too
+-[Tyler] ALLSELECTED returns rows of a table but incorporates the report filters – this seems similar to INCLUDE/EXCLUDE from Tableau.
+--If used without arguments (ALLSELECTED()), it removes filters applied inside the visual but keeps filters from outside (e.g., report/page filters).
+--If used with column arguments (ALLSELECTED(Table[Column])), it removes only the filters on the specified column while keeping other filters.
+-[Tyler] If you pass in column names to the “ALL” functions, it is similar to doing a group by in SQL and values are calculated at the level of detail of the columns you passed in.
+-[Tyler] You can get a blank row of data if there are values in the “many” side of the relationship that do not have a matching value in the “one” side of the relationship – like the book says, this is a sign of an invalid relationship and I don’t think if we are using data all from the same relational database that we will run into this.
+-[Kaylee] DAX evaluates the innermost function first then evaluates the outermost function
+-[Gordon] Table variables in expressions
+-[Gordon] Understanding the difference between DAX studio expressions and DAX report statements (e.g., DEFINE, EVALUATE)
+-[Gordon] If one condition is more selective than the other, applying the most selective condition first by using a nested FILTER function is considered best practice
+-[Gordon] CONCATENATEX
+--[Rachel] Use CONCATENATEX if there is more than 1 brand for a category it won't list the brands in that category because there is more than 1 unless you use this function
+-[James] FILTER isn’t always optimal to use. Book uses SUMX with FILTER as an illustration but says it's not optimal and CALCULATE should be used instead.
+-[James] ALLSELECTED is very complex it can be ‘ridiculously hard to understand even for seasoned DAX developers’
+-[Melanie] Defining measures and calculated columns always use scalar expressions
+-[Ann] When you have nested calls, DAX evaluates the innermost function first and then evaluates the others up to the outermost functions
+-[Melanie] You cannot use the result of a table function as the value of a measure or a calculated column, but can assign the result to a calculated table
+-[Ann] A basic usage of a table calculation is to filter down the data into a subset table
+--Ex: Filtering the data with all of the products that are > 3,000
+-[Melanie] If one condition is more selective than the other it is best practice to apply the most selective condition first by using a nested FILTER function
+-[Ann] The ALL function ignores ALL of the filters that are in place on a visual
+--Ex: This can be useful when you want the total sales of ALL products next to the individual sales of different products
+-[Melanie] ALL cannot be a table expression, it needs to be a table name or a list of column names
+-[Melanie] ALLEXCEPT is a great way if you plan on adding columns in the future that you want to come in automatically
+-[Tommy] BLANK row can be introduced in an invalid many to one relationship where Many side of relationship has values, but One side does not have a value match
+--Ex: Sales Table (many-to-1) Products Table. If Vacuum is removed from the Products Table, then all Vacuum sales are associated with a "Blank" product row.
+-[Rachel] Values should be your default choice only leaving DISTINCT to cases when you want to explicitly exclude the possible blank value
+-[Kaylee] ALLEXCEPT is mainly useful as a parameter of CALCULATE in advanced calculations
+-[Kaylee] VALUES considers a blank row as a valid row and returns it. DISTINCT does not return the blank row
+
+Chapter 4 Understanding Evaluation Contexts
+-[James] The filter context filters, the row context iterates, they are not the same
+--The filter context filters the model; the row context iterates one table
+-[Gordon] Calc Columns automatically create row context
+-[Gordon] "every cell of the report has a different filter context"
+-[Gordon] Rows, columns, slicers, page/report/visual filter, visual interaction all contribute to filter context = set of filters
+-[Gordon] Row Context ~ Explicit SQL CURSOR
+-[Melanie] "row context is not a tool to filter tables. Instead it is used to iterate over tables and evaluate column values"
+-[Gordon] Iterator order of operations (1) Filter Context (2) new row context (3) iterate evaluated in filter context and new row context (4) Aggregate evaluation
+-[Gordon] Multiple row context, Different tables → reference iterated tables in single DAX expression
+-[Gordon] Use variables to access earlier (outer) row contexts and prevent one row context (inner) hiding another in the same table, as a newer alternative to EARLIER/EARLIEST
+-[Gordon] RELATED() to iterate the many side (and access the one side), RELATEDTABLE() to iterate the one side (and access the many side) through a similar-relationship-chain. 1-to-1 acts as m-to-1 and 1-to-m. Directionality matters, beware of unintentional many-to-many
+-[Gordon] Food for thought, "As a rule, you should enable bidirectional filters in specific measures by using the CROSSFILTER function, and only when strictly required"
+-[Gordon] FILTER() is an iterator
+--[Melanie] FILTER uses row context not filter context :)
+-[Kaylee] ALL ignores the filter context
+-[SUMMARIZE] Can generate the existing unique combinations of two columns
+--[Tyler] For me this is like doing a "GROUP BY" in SQL.
+-[DAX] Automatically creates a row context for a calculated column
+-[Melanie] If you want to evaluate an expression row by row inside a measure you must start with an iteration to create a row context
+-[Ann] RELATED requires a row context (an iteration) on the table on the MANY side of a relationship
+-[Ann] RELATEDTABLE is used when iterating on the ONE side of the relationship
+--RELATEDTABLE will return all of the rows of the table on the many side that are related with the currently iterated table
+-[Ann] The only exceptions to the RELATED and RELATEDTABLE are ONE to ONE relationships
+--You can use RELATED or RELATEDTABLE and they will both get the same answer
+-[Ann] The filter context iterates with filters automatically
+-[Ann] Avoid using the bidirectional relationship… rather use the CROSSFILTER function when strictly needed
+-[Melanie] "If the previous contexts already contained a row context for the same table, then the newly created row context hides the previous existing row context on the same table. For DAX newbies, this is a possible source of mistakes." p91
+-[Tyler] "Row context references a row in the result of DAX table expression. It should not be confused with a row in the report. DAX does not have a way to directly reference a row or column in the report. The values displayed in a matrix are the result of DAX measures computed in a filter context, or are values stored in the table as native or calculated columns."
+-[Tyler] Iterator functions allow you to create row context, which you need to define for measures.
+-[James] Is it fair to say that a measure lacks row context but has filter context while a calculated column has row context but lacks filter context?
+
+Chapter 5 Understanding Calculate and CalculateTable
+-[Gordon] CALCULATE (1) creates a new filter context by manipulating the existing (outer) context on the columns contained in the filter argument (set intersection if multiple arguments) and creating filter contexts out of existing row contexts, and then (2) evaluates the expression
+-[Gordon] CALCULATE filter arguments are tables
+-[Gordon] Use fact table and leverage expanded tables to remove all filters on fact data
+-[Gordon] KEEPFILTERS adds (outer) CALCULATE (inner) context to affected columns instead of replacing it
+-[Gordon] For multiple arguments on the same column, the default behavior is AND. Need to use one predicate with OR if OR behavior is desired
+-[Gordon] Creating a filter with the minimum number of columns required by the predicate is a best practice
+-[Gordon] CALCULATE executes context transition (CT), converting row context to filter context by creating all-table-column filters with a set of unique value combinations. Not the same as iteration; filters can back-propagate, and rows may not be unique. CALCULATE CT should be avoided if row uniqueness cannot be guaranteed. CT is expensive (performance)
+-[Gordon] CALCULATE is implicit in measures, so CT happens. Beware when using measures in calc columns, which invoke row context. Among other things, circular dependencies can occur with >1 CALCULATE column unless there is one column (e.g., a key column) that is unique to each row
+-[Gordon] See "CALCULATE rules" page
+-[Ann] CALCULATE and CALCULATETABLE display the same behaviors
+-[Ann] CALCULATE does not modify a filter context: it creates a new filter by merging its filter parameters with the existing filter context
+-[Ann] A filter within CALCULATE will overwrite the filter context previously made for that column
+--[Ann] KEEPFILTERS allows you to not overwrite the filter context
+-[Ann] USERELATIONSHIP calculate modifier allows you to have inactive relationships and use them when needed
+--This will deactivate the other relationship and activate the inactive one
+-[Ann] CROSSFILTER can change the cross filter direction of a relationship and disable a relationship
+-[Kaylee] Using a Boolean condition is a shortcut for the complete CALCULATE syntax (known as syntax sugar)
+--[Tyler] The filter arguments are actually tables
+-[Kaylee] CALCULATE uses the new condition to replace existing filters on the columns in the model
+-[Tyler] CALCULATE is the only DAX function that can modify the filter context
+-[Tyler] Filter arguments of CALCULATE are evaluated in the original filter context where CALCULATE is called (EX: that is why VALUES works as an argument)
+-[Tyler] Combining ALL/VALUES with CALCULATE seems like it will be a common use case to do totals
+-[Tyler] A filter argument referencing multiple columns requires an explicit table expression (FILTER)
+-[Tyler] Page 147 is really helpful to understand nested CALCULATE calls
+-[Tyler] CALCULATE also triggers context transition for calculated columns - measures have an implicit CALCULATE surrounding it
+-[Kaylee] CALCULATE accepts filters of two types: lists of values and Boolean conditions
+-[Tommy] Measures are always wrapped with an implicit (hidden) CALCULATE. Whenever you read a measure call in DAX, you should always read it as if CALCULATE were there. Because it is there.
+-[Melanie] When a table has a row identifier, you can use CALCULATE without worrying about circular references
+
+Chapter 6 Variables
+-[Gordon] VAR/RETURN block; RETURN is unique in the expression
+-[Gordon] VAR as scalar or table; VAR name is not alias for column references, use original table names; VAR name cannot be the same as any model table
+-[Gordon] VAR's are constant - evaluated once where it is defined, not where it is used
+-[Gordon] Scope: inner can see outer; later can see previously defined; VAR/RETURN nesting is possible; VAR is accessible from its definition until RETURN statement
+-[Gordon] Best Practice
+--RETURN a single variable so that the RETURN can be easily switched out for other VARs to evaluate the expression during development
+--Use VAR for sub-formulas used multiple times in complex expression; > 10 lines of code, break up in VARs
+--Code documentation; nesting row contexts in same table; nesting filter contexts (e.g., evaluating totals outside of iteration instead of trying measure inside an iteration)
+-[Gordon] Author admits that Power BI formula editor is not friendly to longer code using VARs
+-[Tyler] Like the first line of the chapter says, I see variables as a way to compartmentalize and make longer formulas easier to read and troubleshoot (this is good programming practice in general).
+-[Tyler] The second biggest thing I see variables useful for are for things that are repeated throughout the calculation.
+-[Tyler] The book states "It is possible to nest VAR/RETURN statements inside each other, or to have multiple VAR/RETURN blocks in the same expression" - do we feel like this is good practice? I lean toward formulas should just have one "return" — if another one is needed then it needs to be another calculation.
+-[Kaylee] A variable is never available outside of its own VAR/RETURN block definition
+-[Ann] Variables can be used to store partial results of a calculation
+--Each variable is only evaluated once
+--When referencing other variables make sure that the references are spelled out before
+-[Ann] A variable cannot have the same name as a table within the model
+
 Chapter 7 Iterators and CALCULATE
 -[Gordon] table is evaluated before; iterator is evaluated in row context of the expression.  Some functions without '%X' are also iterators; see '!resources'
 -[Gordon] iterator cardinality - the number of rows being iterated. Depends on # rows in tables, inner/outer, relationships, measures in other measures; can be combinatorial or if written better, only be the cardinality of the inner table. Avoid nested iterators if cardinality of outer iterators is very large
@@ -76,7 +217,27 @@ Chapter 12 Working with Tables
 --CALCULATETABLE (1) changes filter context (2) evaluate expression
 --FILTER (1) iterates over first argument retrieving only the rows that meet the condition
 -[Gordon] CALCULATETABLE can only apply fi lters to columns that belong to the data model; FILTER can filter on a measure
--[Gordon] ADDCOLUMNS(), SUMMARIZE(), CROSSJOIN(), UNION(), INTERSECT(), EXCEPT()
+-[Gordon] 
+--ADDCOLUMNS() to add new columns to the input table, 
+--SUMMARIZE() to perform grouping after a scan of the table, 
+--CROSSJOIN() to perform the cartesian product of two tables, 
+--UNION(),INTERSECT(), EXCEPT() basic set of operations on tables
+--ROW(), DATATABLE(), GENERATESERIES() to generate mostly constant tables as calculated tables
 -[Gordon] SUMMARIZE() can "add columns" for aggregations grouped by the SUMMARIZE() columns, but this functionality is deprecated because SUMMARIZE creates one row context and one filter context at the same time.  !!!Use ADDCOLUMNS() and SUMMARIZE() together instead because then there is one row context used in a context transition!!!
 -[Gordon] Use CROSSJOIN() for "OR" type efficient measures, or to obtain possible combinations for "things that didn't happen"
 -[Gordon] UNION() has no lineage unless the lineage of the input tables is the same, can add lineage using TREATAS()
+-[Gordon] EXCEPT() common for customer behavior, uses lineage of first table
+-[Gordon] use CROSSJOIN() or SUMMARIZE() in a measure for OR slicer conditions
+-[Gordon] use CALCULATEDTABLE()s to narrow computations to "first year's customers" type of measures
+-[Gordon] use CALCULATEDTABLE()s to find "new customers" - "is the first sale within the currend period?" - by any dimension (filter), or all dimensions (using ALL())
+-[Gordon] "[column] IN {[value], [value]}" ~ "CONTAINSROW ( {[value], [value]},[column])".  These work across multiple columns as well
+-[Gordon] Use DETAILROWS() to "invokes a table expression stored in a measure" and apply a template transformation to the filter context.  Deprecated (mostly) by calculation groups. define hidden measures just to store long table expressions often used as fi lter arguments of many
+other DAX measures. See p 389.  [Measure with table expression filter applied] := CALCULATE([Measure],DETAILROWS([Detail Rows Expression Measure]))
+-[Gordon] SELECTCOLUMNS() to reduce #columns in a table, and add new columns like ADDCOLUMNS().  Column Name & Expression pairs. Single column maintains lineage, new lineage for expression
+-[Gordon] mostly constant table: ROW(), good for troubleshooting DAX studio, but somewhat deprecated by table constructor.  No data lineage.
+-[Gordon] mostly constant table: DATATABLE() for constant tables; PowerQuery seems to be better way but maybe use in a measure or calculated tables in rare cases
+-[Gordon] mostly constant table: GENERATESERIES(). output format depends on input format.  e.g., TIME
+-[Gordon] use CALCULATETABLE whenever a filter needs to be applied on a model column, or there is a need to use context transitions and filter context modifiers
+
+Chapter 13 Authoring Queries
+-[Gordon]
