@@ -76,5 +76,5 @@ Chapter 12 Working with Tables
 --CALCULATETABLE (1) changes filter context (2) evaluate expression
 --FILTER (1) iterates over first argument retrieving only the rows that meet the condition
 -[Gordon] CALCULATETABLE can only apply fi lters to columns that belong to the data model; FILTER can filter on a measure
--[
-
+-[Gordon] ADDCOLUMNS(), SUMMARIZE(), CROSSJOIN(), UNION(), INTERSECT(), EXCEPT()
+-[Gordon] SUMMARIZE() can "add columns" for aggregations grouped by the SUMMARIZE() columns, but this functionality is deprecated because SUMMARIZE creates one row context and one filter context at the same time.  !!!Use ADDCOLUMNS() and SUMMARIZE() together instead because then there is one row context used in a context transition!!!
