@@ -1,6 +1,6 @@
 6 SUMMARIZE(<table>, <groupBy_columnName>[, <groupBy_columnName>]…[, <name>, <expression>]…)
  Returns a summary table for the requested totals over a set of groups. It scans a table (its fi rst argument),
-grouping columns of the same or other related tables in groups of one or more.F
+GROUPING columns of the same or other related tables in groups of one or more.F
 6 DISTINCT(<table>) Returns a table by removing duplicate rows from another table or 
 expressionF
 6 ADDCOLUMNS(<table>, <name>, <expression>[, <name>, <expression>]…) Adds calculated columns to the given table or table expression. returns all the rows and columns of its fi rst argument, adding newly created columns to the output.
