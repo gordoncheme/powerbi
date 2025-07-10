@@ -2,7 +2,7 @@
  Returns a summary table for the requested totals over a set of groupsF
 6 DISTINCT(<table>) Returns a table by removing duplicate rows from another table or 
 expressionF
-6 ADDCOLUMNS(<table>, <name>, <expression>[, <name>, <expression>]…) Adds calculated columns to the given table or table expressionF
+6 ADDCOLUMNS(<table>, <name>, <expression>[, <name>, <expression>]…) Adds calculated columns to the given table or table expression. returns all the rows and columns of its fi rst argument, adding newly created columns to the output.
 6 SELECTCOLUMNS(<table>, <name>, <expression>[, <name>, <expression>]…) Selects calculated columns from the given table or table expressionF
 6 GROUPBY(<table> [, <groupBy_columnName>[, [<column_name>] [<expression>]]…) Create a summary of the input table grouped by specific columnsF
 6 INTERSECT(<left_table>, <right_table>) Returns the rows of the left-side table that appear in the right-side tableF
