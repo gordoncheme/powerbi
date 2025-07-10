@@ -73,4 +73,8 @@ Chapter 11 Handling hierarchies
 
 Chapter 12 Working with Tables
 -[Gordon] CALCULATETABLE(<table>, <filter1>, <filter2>, ...) | FILTER does not change the filter context, where CALCULATETABLE does
+--CALCULATETABLE (1) changes filter context (2) evaluate expression
+--FILTER (1) iterates over first argument retrieving only the rows that meet the condition
+-[Gordon] CALCULATETABLE can only apply fi lters to columns that belong to the data model; FILTER can filter on a measure
+-[
 
