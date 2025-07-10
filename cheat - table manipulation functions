@@ -9,3 +9,4 @@ expressionF
 6 NATURALINNERJOIN(<left_table>, <right_table>) Joins two tables using an inner joinF
 6 NATURALLEFTOUTERJOIN(<left_table>, <right_table>) Joins two tables using a left outer joinF
 6 UNION(<table>, <table>[, <table> [,…]]) Returns the union of tables with matching columns.
+6 EXCEPT(<table_expression1>, <table_expression2>) Returns a table that contains the rows of one table (1) minus all the rows of another table (2).
