@@ -22,7 +22,7 @@ expressionF
    Function	Description	Lineage Behavior
    ADDCOLUMNS()	Adds calculated columns to a table.	New columns have new lineage.
    SUMMARIZE()	Groups data by specified columns and optionally adds aggregations.	Grouping columns retain lineage; aggregation columns have new lineage.
-   SUMMARIZECOLUMNS() Groupos data and applies filters; optimized for use in measures and visuals. Grouping columns retain linage; calculated columns have new lineage.
+   SUMMARIZECOLUMNS() Groups data and applies filters; optimized for use in measures and visuals. Grouping columns retain linage; calculated columns have new lineage.
    CROSSJOIN()	Returns the Cartesian product of two or more tables.	Lineage is preserved for original columns.
    UNION()	Returns a table that is the union of two tables (duplicates removed).	Lineage is preserved if columns are directly passed; otherwise, new lineage may be introduced.
    INTERSECT()	Returns a table with rows common to both tables.	Same as UNION()—depends on how columns are constructed.
