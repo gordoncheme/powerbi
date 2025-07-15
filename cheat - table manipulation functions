@@ -17,3 +17,28 @@ expressionF
 6 ROW(<name>, <expression>[, <name>, <expression>]…) create a single row of data with specified column names and values. It is particularly useful when you need to create a table with a single row for calculations or testing purposes.
 6 DATATABLE(ColumnName1, DataType1, ColumnName2, DataType2, ..., { {Value1, Value2, ...}, {Value1, Value2, ...}, ... }). create a static table directly within your Power BI model. This is particularly useful for creating small reference tables or lookup tables without needing to import data from an external source.
 6 GENERATESERIES(<StartValue>, <EndValue>[, <IncrementValue>]) create a single-column table containing a series of values. It is particularly useful for generating sequences of numbers, which can be used for calculations, visualizations, or as a reference table. output format depends on input format.  e.g., TIME
+
+6 LINEAGE
+   Function	Description	Lineage Behavior
+   ADDCOLUMNS()	Adds calculated columns to a table.	New columns have new lineage.
+   SUMMARIZE()	Groups data by specified columns and optionally adds aggregations.	Grouping columns retain lineage; aggregation columns have new lineage.
+   CROSSJOIN()	Returns the Cartesian product of two or more tables.	Lineage is preserved for original columns.
+   UNION()	Returns a table that is the union of two tables (duplicates removed).	Lineage is preserved if columns are directly passed; otherwise, new lineage may be introduced.
+   INTERSECT()	Returns a table with rows common to both tables.	Same as UNION()—depends on how columns are constructed.
+   EXCEPT()	Returns a table with rows from the first table that do not appear in the second.	Uses the lineage of the first table.
+   SELECTCOLUMNS()	Returns a table with selected columns and optional expressions.	Direct references retain lineage; computed/renamed columns get new lineage.
+   ROW()	Returns a single-row table with specified columns and values.	All columns have new lineage.
+   DATATABLE()	Returns a static table defined inline with specified data types.	All columns have new lineage.
+   GENERATESERIES()	Returns a single-column table of values from start to end with a specified increment.	Column has new lineage.
+   CALCULATETABLE()	Evaluates a table expression in a modified filter context.	Depends on the inner expression; lineage follows the source table.
+   
+   # Quick Notes on “New Lineage”
+   - New lineage = column is not tied to model relationships.
+   - Filters on model columns won’t affect new-lineage columns.
+   - Can break CALCULATE, filters, or relationships.
+   
+   # Fixing Lineage with TREATAS()
+   - Use TREATAS(<table>, <model_column>) to assign lineage.
+   - Enables filter propagation and relationship behavior.
+
+6 [next entry]
