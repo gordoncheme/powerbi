@@ -40,3 +40,21 @@
 6 TIME INTELLIGENCE NOTES
 -DAX automatically adds ALL() to table.Dates when filter is applied to type.Date or type.DateTime column.  MARK AS DATE TABLE TO ENABLE THIS. WORKS EVEN IF RELATIONSHIP USES [datekey] TYPE COLUMN
 -Context transition for time intelligence functions occurs only when a date column is specified as a column reference
+
+6 ALLSELECTED()
+	ALLSELECTED – Key Takeaways
+	Preserves User Selections: ALLSELECTED retains filters from slicers and other visuals, even when the current visual applies additional filters.
+	
+	Uses Shadow Filter Context: It uniquely accesses a "shadow" version of the filter context, allowing it to reflect the broader user selection rather than just the current visual’s filters.
+	
+	Ideal for Percent of Total Calculations: It’s commonly used to calculate values like "percent of total" that need to respect slicer selections but ignore visual-level filters.
+	
+	Behaves Differently in Iterators: When used inside functions like SUMX, ALLSELECTED can produce unexpected results due to how it interacts with row context and shadow filters.
+	
+	Not a Visual-Aware Function: Despite appearances, ALLSELECTED doesn’t "see" visuals—it only works with the filter context passed to the DAX engine.
+	
+	Avoid Mixing with SUMMARIZECOLUMNS in Iterators: Combining ALLSELECTED with SUMMARIZECOLUMNS inside iterators can lead to confusing or incorrect results.
+	
+	Use Simpler Alternatives When Possible: If you don’t need its specific behavior, consider using ALL, REMOVEFILTERS, or VALUES for clearer and more predictable logic.
+
+6 
