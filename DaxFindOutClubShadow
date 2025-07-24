@@ -240,4 +240,33 @@ other DAX measures. See p 389.  [Measure with table expression filter applied] :
 -[Gordon] use CALCULATETABLE whenever a filter needs to be applied on a model column, or there is a need to use context transitions and filter context modifiers
 
 Chapter 13 Authoring Queries
--[Gordon]
+-[Gordon] EVALUATE is the core DAX query statement. Returns a table expression result. 
+--Can be preceded by DEFINE for local VARs, MEASUREs, TABLEs. 
+--ORDER BY and START AT are optional result modifiers.
+[Gordon] DEFINE VAR = query variable (available throughout the query); EVALUATE VAR = expression variable (local to table expression - best when used once for expression to move to data model)
+-[Gordon] DAX Studio is the preferred tool for authoring/debugging queries. 
+--Supports Power BI, SSAS, Power Pivot. 
+--Integrates with daxformatter.com for formatting. 
+--Captures query plans and server timings.
+-[Gordon] Use DEFINE VAR for reusable expressions across EVALUATE blocks. 
+--Scope: entire query batch. 
+--Use DEFINE MEASURE to test measure logic in isolation (specify the table in measure definition)
+-[Gordon] ROW() returns a single-row table with named columns. Useful for testing measures or building small inline tables.
+-[Gordon] SUMMARIZE() groups by columns, can use ROLLUP() for subtotals. 
+--ROLLUPGROUP() and ROLLUPADDISSUBTOTAL() for multi-column subtotal logic. 
+--ISSUBTOTAL() detects subtotal rows.
+-[Gordon] SUMMARIZECOLUMNS() preferred over SUMMARIZE in queries. 
+--Supports filter arguments and modifiers like IGNORE, ROLLUPADDISSUBTOTAL. 
+--Auto-exists behavior: removes invalid combinations from same table. 
+--Use ADDMISSINGITEMS() to restore rows removed due to blank measures (not auto-exists).
+-[Gordon] TREATAS() applies filters from one table to another. Useful for expressing filters in SUMMARIZECOLUMNS.
+-[Gordon] TOPN() returns top N rows based on expression. --Can return more than N if ties exist. 
+--Use additional sort columns to break ties.
+-[Gordon] GENERATE() and GENERATEALL() implement SQL OUTER APPLY logic. Useful for expanding rows with nested tables.
+-[Gordon] GROUPBY() is a lightweight alternative to SUMMARIZE. Does not auto-add row context; must use ADDCOLUMNS() for computed columns.
+-[Gordon] SUBSTITUTEWITHINDEX() adds a sort index to grouped results. Used for pagination or stable sorting.
+-[Gordon] SAMPLE() returns a random subset of rows from a table.
+-[Gordon] SELECTCOLUMNS() preferred for shaping tables with specific columns. Maintains lineage for direct columns, not for expressions.
+-[Gordon] Use SELECTEDVALUE() to extract scalar from single-value column. Safer than VALUES() + HASONEVALUE() combo.
+-[Gordon] CONCATENATEX() builds delimited strings from table values. Useful for listing categories, brands, etc.
+-[Gordon] Be aware of SUMMARIZECOLUMNS context transition issues. Fails if used inside CALCULATE or other context-modifying functions.
