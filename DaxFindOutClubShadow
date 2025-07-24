@@ -268,7 +268,6 @@ Chapter 13 Authoring Queries
 -[Gordon] ISONORAFTER() to show results based on that logic.  Can be used with TOPN()
 -[Gordon] GROUPBY() is a lightweight alternative to SUMMARIZE. Does not auto-add row context; must use ADDCOLUMNS() for computed columns; must X iterate.  can group columns whose data lineage does not correspond to
 columns in the data model, whereas SUMMARIZE can only use columns defined in the data model
--[Gordon
 -[Gordon] SUBSTITUTEWITHINDEX() adds a sort index to grouped results. Used for pagination or stable sorting.
 -[Gordon] SAMPLE() returns a random subset of rows from a table.
 -[Gordon] SELECTCOLUMNS() preferred for shaping tables with specific columns. Maintains lineage for direct columns, not for expressions.
