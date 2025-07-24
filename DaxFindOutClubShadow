@@ -250,23 +250,29 @@ Chapter 13 Authoring Queries
 --Captures query plans and server timings.
 -[Gordon] Use DEFINE VAR for reusable expressions across EVALUATE blocks. 
 --Scope: entire query batch. 
---Use DEFINE MEASURE to test measure logic in isolation (specify the table in measure definition)
--[Gordon] ROW() returns a single-row table with named columns. Useful for testing measures or building small inline tables.
+--Use DEFINE MEASURE to test measure logic in isolation (specify the table in measure definition).  Confusing precedence, see pg 400
+-[Gordon] ROW() returns a single-row table with named columns. Useful for testing measures or building small inline tables. CALCULATETABLE() for slicer simulation
 -[Gordon] SUMMARIZE() groups by columns, can use ROLLUP() for subtotals. 
 --ROLLUPGROUP() and ROLLUPADDISSUBTOTAL() for multi-column subtotal logic. 
 --ISSUBTOTAL() detects subtotal rows.
+--SUMMARIZE should not be used to add new columns.
 -[Gordon] SUMMARIZECOLUMNS() preferred over SUMMARIZE in queries. 
---Supports filter arguments and modifiers like IGNORE, ROLLUPADDISSUBTOTAL. 
+--Supports filter arguments and modifiers like IGNORE, ROLLUPADDISSUBTOTAL, ROLLUPGROUP. 
 --Auto-exists behavior: removes invalid combinations from same table. 
 --Use ADDMISSINGITEMS() to restore rows removed due to blank measures (not auto-exists).
 -[Gordon] TREATAS() applies filters from one table to another. Useful for expressing filters in SUMMARIZECOLUMNS.
 -[Gordon] TOPN() returns top N rows based on expression. --Can return more than N if ties exist. 
 --Use additional sort columns to break ties.
 -[Gordon] GENERATE() and GENERATEALL() implement SQL OUTER APPLY logic. Useful for expanding rows with nested tables.
--[Gordon] GROUPBY() is a lightweight alternative to SUMMARIZE. Does not auto-add row context; must use ADDCOLUMNS() for computed columns.
+--GENERATE to iterate over a group, VALUES() as first argument, e.g. VALUES ('Dates'[CalendarYear')
+-[Gordon] ISONORAFTER() to show results based on that logic.  Can be used with TOPN()
+-[Gordon] GROUPBY() is a lightweight alternative to SUMMARIZE. Does not auto-add row context; must use ADDCOLUMNS() for computed columns; must X iterate.  can group columns whose data lineage does not correspond to
+columns in the data model, whereas SUMMARIZE can only use columns defined in the data model
+-[Gordon
 -[Gordon] SUBSTITUTEWITHINDEX() adds a sort index to grouped results. Used for pagination or stable sorting.
 -[Gordon] SAMPLE() returns a random subset of rows from a table.
 -[Gordon] SELECTCOLUMNS() preferred for shaping tables with specific columns. Maintains lineage for direct columns, not for expressions.
 -[Gordon] Use SELECTEDVALUE() to extract scalar from single-value column. Safer than VALUES() + HASONEVALUE() combo.
 -[Gordon] CONCATENATEX() builds delimited strings from table values. Useful for listing categories, brands, etc.
 -[Gordon] Be aware of SUMMARIZECOLUMNS context transition issues. Fails if used inside CALCULATE or other context-modifying functions.
+-[Gordon] auto-exists logic applies when grouping by columns from the same table in SUMMARIZECOLUMNS() --Only existing combinations of values are returned, reducing row count and improving query plans --If grouping columns come from different tables, auto-exists is not applied and a full cross-join is returned --ADDMISSINGITEMS() restores rows removed due to blank aggregation results, but not rows excluded by auto-exists
