@@ -275,3 +275,5 @@ columns in the data model, whereas SUMMARIZE can only use columns defined in the
 -[Gordon] CONCATENATEX() builds delimited strings from table values. Useful for listing categories, brands, etc.
 -[Gordon] Be aware of SUMMARIZECOLUMNS context transition issues. Fails if used inside CALCULATE or other context-modifying functions.
 -[Gordon] auto-exists logic applies when grouping by columns from the same table in SUMMARIZECOLUMNS() --Only existing combinations of values are returned, reducing row count and improving query plans --If grouping columns come from different tables, auto-exists is not applied and a full cross-join is returned --ADDMISSINGITEMS() restores rows removed due to blank aggregation results, but not rows excluded by auto-exists
+
+Chapter 14 Advanced DAX Concepts
