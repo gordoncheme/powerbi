@@ -277,3 +277,31 @@ columns in the data model, whereas SUMMARIZE can only use columns defined in the
 -[Gordon] auto-exists logic applies when grouping by columns from the same table in SUMMARIZECOLUMNS() --Only existing combinations of values are returned, reducing row count and improving query plans --If grouping columns come from different tables, auto-exists is not applied and a full cross-join is returned --ADDMISSINGITEMS() restores rows removed due to blank aggregation results, but not rows excluded by auto-exists
 
 Chapter 14 Advanced DAX Concepts
+-[Gordon] Expanded tables: when a table is defined, it is automatically expanded to include columns from related tables via many-to-one relationships
+--Expansion is one-directional: from many-side to one-side
+--Example: Sales expands to include Product, Product Subcategory, Product Category, and Date
+--Date table only expands to itself unless bidirectional filters are used
+--Expansion occurs at table definition time, not at usage time
+-[Gordon] Table expansion implications
+--Expanded tables affect how filters propagate and how functions like CALCULATE, FILTER, and ALL behave
+--Misunderstanding expansion can lead to incorrect assumptions about filter removal or application
+--Using ALL(Sales) removes filters from all expanded columns, not just Sales
+-[Gordon] Shadow filter contexts
+--Filters can be applied to columns not directly visible in the current context but still influence results
+--Common with ALLSELECTED, KEEPFILTERS, ALLEXCEPT
+--Important to understand which filters are active vs. shadowed
+-[Gordon] Data lineage
+--Each column in a model has a unique data lineage
+--Lineage is preserved when referencing model columns directly
+--Lineage is lost when using expressions or creating new columns via ADDCOLUMNS, ROW
+--SELECTCOLUMNS preserves lineage only if expression is a direct column reference
+-[Gordon] Filter context behavior
+--Filter context filters columns with the same data lineage
+--Columns created by ADDCOLUMNS do not retain lineage, even if values match original columns
+--Use VALUES() to restore filters when ALL() is used on expanded tables
+-[Gordon] Practical examples
+--CALCULATE([Sales Amount], Sales[Quantity] > 1) ≠ CALCULATE([Sales Amount], FILTER(Sales, Sales[Quantity] > 1)) due to expanded table behavior
+--Removing filters from Product Subcategory also removes filters from Product Category unless VALUES(Product Category) is added back
+-[Gordon] Best practices
+--Be explicit about which filters to remove or retain
+--Understand expanded version of a table
