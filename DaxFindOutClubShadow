@@ -297,6 +297,7 @@ Chapter 14 Advanced DAX Concepts
 --Common with ALLSELECTED, KEEPFILTERS, ALLEXCEPT
 --Important to understand which filters are active vs. shadowed
 --ALLSELECTED restores the last shadow filter context, which is a snapshot of the filter context before an iterator (like ADDCOLUMNS) runs. Use ALLSELECTED only in measures directly projected in visuals. Avoid using it inside nested iterations—results can be unpredictable and hard to debug.
+--If a measure contains ALLSELECTED any-where in the code, then that measure cannot be called by any other measure
 -[Gordon] Data lineage
 --Each column in a model has a unique data lineage
 --Lineage is preserved when referencing model columns directly
