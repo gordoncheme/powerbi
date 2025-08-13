@@ -282,13 +282,13 @@ Chapter 14 Advanced DAX Concepts
 --Example: Sales expands to include Product, Product Subcategory, Product Category, and Date
 --Date table only expands to itself unless bidirectional filters are used
 --Expansion occurs at table definition time, not at usage time
---2 "many side" relationships --> "WEAK Relationship"
+--2 "many side" relationships --> "WEAK Relationship", no expansion
 --filter context operates on all the expanded tables containing the filtered columns.
 -[Gordon] Table expansion implications
 --Expanded tables affect how filters propagate and how functions like CALCULATE, FILTER, and ALL behave
 --Misunderstanding expansion can lead to incorrect assumptions about filter removal or application
 --Using ALL(Sales) removes filters from all expanded columns, not just Sales
---the row context of a calculated column is created when the table is defined (expands using the default relationship).  Can use LOOKUPVALUE() instead, which always searches for a reow in a table ignoring any filter context
+--the row context of a calculated column is created when the table is defined (expands using the default relationship).  Can use LOOKUPVALUE() instead, which always searches for a row in a table ignoring any filter context
 --Column filter vs Table filter: Table filters apply a filter to the entire expanded table, which can unintentionally override or ignore context, leading to confusing or incorrect results. Column filters target only specific columns, are more predictable, and are preferred for clarity and performance. Always prefer column filters over table filters in DAX. ALso be mindful of the active relationship implications
 --Denormalize for more natural table expansion
 --1-to-1 table expansion goes both directions
@@ -297,7 +297,7 @@ Chapter 14 Advanced DAX Concepts
 --Common with ALLSELECTED, KEEPFILTERS, ALLEXCEPT
 --Important to understand which filters are active vs. shadowed
 --ALLSELECTED restores the last shadow filter context, which is a snapshot of the filter context before an iterator (like ADDCOLUMNS) runs. Use ALLSELECTED only in measures directly projected in visuals. Avoid using it inside nested iterations—results can be unpredictable and hard to debug.
---If a measure contains ALLSELECTED any-where in the code, then that measure cannot be called by any other measure
+--If a measure contains ALLSELECTED anywhere in the code, then that measure should not be called by any other measure
 -[Gordon] Data lineage
 --Each column in a model has a unique data lineage
 --Lineage is preserved when referencing model columns directly
@@ -306,10 +306,11 @@ Chapter 14 Advanced DAX Concepts
 -[Gordon] Filter context behavior
 --Filter context filters columns with the same data lineage
 --Columns created by ADDCOLUMNS do not retain lineage, even if values match original columns
---Use VALUES() to restore filters when ALL() is used on expanded tables
+--Use VALUES() to restore filters when ALL() is used on expanded tables. When ALL() is used on an expanded table, it removes filters from all columns in that expanded table. To reapply a filter to a specific column after using ALL(), use VALUES() to restore the filter context for that column.
 -[Gordon] Practical examples
 --CALCULATE([Sales Amount], Sales[Quantity] > 1) ≠ CALCULATE([Sales Amount], FILTER(Sales, Sales[Quantity] > 1)) due to expanded table behavior
 --Removing filters from Product Subcategory also removes filters from Product Category unless VALUES(Product Category) is added back
 -[Gordon] Best practices
---Be explicit about which filters to remove or retain
+--Be explicit about which filters to remove or retain; use column filters first
+--Never let ALLSELECTED be called inside an iteration
 --Understand expanded version of a table
