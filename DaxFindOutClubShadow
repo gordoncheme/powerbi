@@ -321,16 +321,38 @@ Chapter 15 Advanced relationships
 --LOOKUPVALUE() on the one-side table in the many-side table
 --Based on ranges (VALUES() to return a VALUE).  May need DISTINCT()for circular dependencies.  See p476
 -[Gordon] Circular dependency happens when a calculated column/relationship relies on another calc that loops back to it — DAX cannot resolve the chain (p476). Best practice: avoid calculated physical relationships where dependencies are unclear; use measures or virtual relationships instead.
+--The exact source of the circular dependency error in Chapter 15 is when you try to define a calculated physical relationship (a relationship built on a calculated column) and that column itself depends, directly or indirectly, on the relationship being created.  Formula Dependency and Blank Row Dependency; DISTINCT() removes Blank Row Dependency
+---Use DISTINCT instead of VALUES.
+---Use ALLNOBLANKROW instead of ALL.
+---Beware of CALCULATE with fi lters using the compact syntax.  VALUES() is often hidden in the code
 -[Gordon] DAX only allows one *active* physical relationship between two tables. Any additional relationships must be inactive, but can be activated in a calculation with USERELATIONSHIP. Example: Sales table linked to Date by OrderDate (active) and ShipDate (inactive). To compute metrics by ShipDate, wrap measure with CALCULATE and USERELATIONSHIP.
 -[Gordon] USERELATIONSHIP is temporary and scoped to the calculation — it does not change the model. Best practice: be explicit and name measures clearly when using USERELATIONSHIP so it’s obvious which date (or key) is in play.
--[Gordon] Virtual relationships (TREATAS, FILTER, INTERSECT) let you connect tables without creating physical relationships in the model. TREATAS is the cleanest way: it applies values from one column onto another table as if a relationship existed. Example: TREATAS(VALUES(Segments[Segment]), Customers[Segment]) lets you filter Customers dynamically by Segments table.
--[Gordon] FILTER or INTERSECT can also simulate relationships, but they are less efficient than TREATAS. Use TREATAS when possible for readability and performance.
+-[Gordon] Virtual relationships (TREATAS, FILTER, INTERSECT) let you connect tables without creating physical relationships in the model. 
+--FILTER or INTERSECT can also simulate relationships, but they are less efficient than TREATAS. Use TREATAS when possible for readability and performance.
+--TREATAS is the cleanest way: it applies values from one column onto another table as if a relationship existed. Example: TREATAS(VALUES(Segments[Segment]), Customers[Segment]) lets you filter Customers dynamically by Segments table.
+--INTERSECT() retaines the data lineage of the first table it receives, which is a way to get lineage
+--FILTER('table', CONTAINS('table1', ['table1'[column], 'tablewithlineage'[column1]. . ])
 -[Gordon] Bidirectional filters propagate context both ways across a relationship. While useful in many-to-many, they can cause ambiguity and performance problems. Best practice: keep relationships single-direction in the model; override with CROSSFILTER only inside specific measures where needed.
--[Gordon] Many-to-many can be resolved in three main ways: (1) using a bridge table, (2) using a shared dimension, or (3) weak MMR relationships. Bridge tables are often the most transparent and maintainable. Example: Products linked to Promotions by a bridge table that resolves many-to-many mapping.
+--Use Slicer Visual Filter to limit the members of the Slicer,  not bi-directional relationships
+-[Gordon] Many-to-many can be resolved in three main ways: (1) using a bridge table, (2) using a shared dimension, or (3) weak MMR relationships (no blank row added to tables!). Bridge tables are often the most transparent and maintainable. Example: Products linked to Promotions by a bridge table that resolves many-to-many mapping.
+| Type of Relationship | Cross-filter Direction | Filter Context Propagation                       | Weak / Strong Type                          |
+|----------------------|-----------------------|-------------------------------------------------|---------------------------------------------|
+| SMR                  | Single                | From the one side to the many side              | Weak if cross-island, strong otherwise     |
+| SMR                  | Both                  | Bidirectional                                    | Weak if cross-island, strong otherwise     |
+| SSR                  | Both                  | Bidirectional                                    | Weak if cross-island, strong otherwise     |
+| MMR                  | Single                | Must choose the source table                     | Always weak                                 |
+| MMR                  | Both                  | Bidirectional                                    | Always weak                                 |
 -[Gordon] One-to-one and one-to-many relationships are straightforward in DAX; many-to-many requires more design thought. Best practice: explicitly model a bridge when relationships are not naturally one-to-many.
--[Gordon] Dynamic segmentation can be achieved with virtual relationships. Example: create ranges (like Customer Spend Buckets) and use TREATAS to dynamically filter fact tables by those ranges, without hardcoding segments in the data model.
+-[Gordon] Dynamic segmentation can be achieved with virtual relationships. 
+--Example: create ranges (like Customer Spend Buckets) and use TREATAS to dynamically filter fact tables by those ranges, without hardcoding segments in the data model.
+--Example: FILTER ('table', [VARs and Return of check if in segment])
+-[Gordon] Creating relationships at a higher granularity than primary key can cause visual problems.  Handle in measures to check for counts on the scoped dimensions in the relationship
 -[Gordon] Be cautious of circular dependency errors when trying to build calculated columns that depend on relationships defined by other calculated columns. Lesson: avoid calculated physical relationships when the dependency chain is not clear.
 -[Gordon] Relationship ambiguity arises when more than one filter path exists between two tables. Example: Date to Sales through both OrderDate and ShipDate. Best practice: resolve ambiguity explicitly by controlling relationship use (USERELATIONSHIP, CROSSFILTER, or TREATAS) rather than leaving it to DAX to decide.
+--DAX takes the shortest path to reduce ambiguity
+--Power BI now actively detects and prevents the creation of ambiguous relationships
+---it does not fully prevent ambiguity in the physical data model when multiple paths or bidirectional filters exist
+--By deactivating a relationship, one can accidentally activate another relationship that was not even cited in the code, generally caused by bi-directional filters
 -[Gordon] Rule of thumb: use physical relationships where possible (cleaner, more performant), and virtual relationships only when necessary (flexibility, multiple filter paths, dynamic segmentation).
 
 Conclusions
