@@ -358,3 +358,56 @@ Chapter 15 Advanced relationships
 Conclusions
 -[Gordon] Advanced relationships are powerful but require discipline. Default to simple one-to-many, single-direction physical relationships. Use USERELATIONSHIP to activate inactive paths, TREATAS for flexible virtual links, and bridge tables for many-to-many. Always resolve ambiguity intentionally and document which relationship logic a measure uses.
 
+Chapter 16 Advanced calculations in DAX
+
+-[Gordon] Working days between two dates (NETWORKDAYS equivalent)
+--Simple subtraction of dates gives calendar days; not accurate for business scenarios.
+--To count only working days (excluding weekends/holidays):
+---Use DATESBETWEEN() to get the date range.
+---FILTER() to exclude weekends (WEEKDAY() not in {1,7}) and/or holidays (custom column).
+---COUNTROWS() on the filtered table gives working days.
+--Performance can be improved by grouping orders by (Order Date, Delivery Date) and using a weighted average.
+--For large datasets, precompute working day differences and store in a lookup table for fast retrieval.
+
+-[Gordon] Combining budget and sales for forecasting
+--Scenario: Actual sales available up to a certain date, budget for the rest of the year.
+--Find last date with sales using CALCULATE(MAX(Sales[OrderDate]), ALL(Sales)).
+--SUMX over Date table: 
+---If date <= last sales date, use actual sales; else, use budget.
+--Optimized approach: sum all sales up to last date, then add budget for dates after last sales date.
+--Use KEEPFILTERS to preserve existing context when applying date filters.
+
+-[Gordon] Same-store (like-for-like) sales analysis
+--Goal: Compare only stores/departments open for all periods in the analysis.
+--Store open/closed status is tracked in a status table by (Store, Category, Year).
+--For each (Store, Category), check if SELECTEDVALUE(Status[Status], ALLSELECTED(Years)) = "Open".
+--Use SUMMARIZE to get (Store, Category) pairs, FILTER to keep only those open all years, then CALCULATE sales for those.
+--Alternative: Infer open/closed from sales data, but absence of sales ≠ closed.
+
+-[Gordon] Numbering sequences of events (e.g., order position per customer)
+--Goal: For each order, assign a sequential number per customer.
+--Approach 1: For each order, count number of orders for that customer with OrderNumber <= current.
+---Uses CALCULATE(DISTINCTCOUNT(Sales[OrderNumber]), Sales[OrderNumber] <= CurrentOrderNumber, ALLEXCEPT(Sales, Sales[CustomerKey]))
+---Can be slow for large tables (O(N^2)).
+--Approach 2: Use RANKX over all orders for the customer, ordered by OrderNumber (ASC, DENSE).
+---Much faster and preferred.
+
+-[Gordon] Previous year sales up to last date of sales (partial year comparison)
+--Problem: Comparing incomplete current year to full previous year is misleading.
+--Solution: Find last sales date in current year, use SAMEPERIODLASTYEAR(TREATAS(last date, Date[Date])) to get cutoff in prior year.
+--Filter previous year sales to only include dates <= cutoff.
+--Best practice: Precompute a Boolean column in Date table (IsComparable) to flag dates to include in YOY comparison.
+
+-[Gordon] General pattern: Multiple ways to solve the same DAX problem
+--DAX allows for several formulations of the same logic (e.g., SUMX, CALCULATE, precomputed columns, lookup tables).
+--Performance and clarity depend on data size, cardinality, and context.
+--Test and measure different approaches; no universal best practice.
+
+Conclusions
+-[Gordon] Advanced DAX calculations require creative use of table functions, iterators, and context manipulation.
+--Precompute where possible for performance.
+--Use variables to improve readability and avoid repeated calculations.
+--Always validate business logic, especially for time-based and like-for-like analyses.
+--Optimization is data-dependent; measure and compare alternatives.
+
+
