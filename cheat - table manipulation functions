@@ -43,4 +43,61 @@ expressionF
    - Use TREATAS(<table>, <model_column>) to assign lineage.
    - Enables filter propagation and relationship behavior.
 
-6 [next entry]
+6 UNION on tables with Calc Columns
+# DAX UNION with Calculated Columns: Summary & Best Practices
+
+## 1. Problem Statement
+
+- Using DAX `UNION` directly on tables with calculated columns can result in **incorrect values** for those columns in the UNION'ed table.
+- Example:  
+  - `MovementExclude_Flag` is `0` in the source table, but becomes `1` in the UNION'ed table.
+  - Using `SELECTCOLUMNS` inside UNION preserves the correct value.
+
+---
+
+## 2. Why Does This Happen?
+
+- **Direct UNION:**  
+  - Calculated columns are **re-evaluated** in the context of the UNION'ed table, not the original row context.
+  - Dependencies between calculated columns (e.g., `MovementExclude_Flag` depends on `MovementExclude`) may break, causing incorrect results.
+
+- **SELECTCOLUMNS Approach:**  
+  - `SELECTCOLUMNS` **materializes** the values from the source tables before UNION'ing.
+  - This preserves the correct values and avoids context loss.
+
+---
+
+## 3. Solution & Best Practice
+
+1. **Always use SELECTCOLUMNS inside UNION when calculated columns are involved.**
+2. **Explicitly specify each column and alias in SELECTCOLUMNS.**
+3. **Do not rely on direct UNION for tables with calculated columns that depend on row context or other calculated columns.**
+
+---
+
+## 4. Example
+
+```dax
+UNION(
+    SELECTCOLUMNS(
+        'SourceTable1',
+        "ColumnA", [ColumnA],
+        "CalculatedCol", [CalculatedCol]
+    ),
+    SELECTCOLUMNS(
+        'SourceTable2',
+        "ColumnA", [ColumnA],
+        "CalculatedCol", [CalculatedCol]
+    )
+)
+## 5. Key Takeaways
+
+- **Issue:**  
+  DAX context loss in UNION causes calculated column errors.
+
+- **Fix:**  
+  Use SELECTCOLUMNS to preserve values.
+
+- **Requirement:**  
+  Specify each column and alias for reliable results.
+
