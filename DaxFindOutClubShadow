@@ -410,4 +410,64 @@ Conclusions
 --Always validate business logic, especially for time-based and like-for-like analyses.
 --Optimization is data-dependent; measure and compare alternatives.
 
+Chapter 17 The DAX Engines
 
+-[Gordon] The DAX Engines chapter explains how DAX queries are executed, what the Formula Engine (FE) and Storage Engine (SE) do, and why understanding them is critical for performance.
+--The DAX architecture is split into two main engines:
+---Formula Engine (FE): Handles DAX/MDX logic, query planning, and anything that can’t be pushed down to storage. Always single-threaded.
+---Storage Engine (SE): Handles data scans and aggregations. Can be VertiPaq (in-memory, columnar) or DirectQuery (pushes queries to source DB). SE can use multiple cores if there are enough data segments.
+
+-[Gordon] VertiPaq is the default and most common storage engine for Power BI, SSAS Tabular, and Power Pivot.
+--VertiPaq stores data column-by-column (not row-by-row), enabling high compression and fast scans.
+---Compression is achieved through value encoding (for integers), hash encoding (for strings), and run-length encoding (for repeated values).
+---Lower cardinality (fewer unique values) = better compression and faster queries.
+---Data is split into segments (default 8M rows per segment in SSAS, 1M in Power BI); parallelism happens at the segment level.
+
+-[Gordon] DirectQuery is used when data is too large for memory or needs to be real-time.
+--DirectQuery pushes queries to the source database (e.g., SQL Server).
+---Slower than VertiPaq, but always up-to-date.
+---Composite models can use both VertiPaq and DirectQuery tables.
+
+-[Gordon] Query execution flow:
+--FE receives the query, builds logical and physical query plans, and sends requests to SE.
+--SE returns datacaches (uncompressed, in-memory tables) to FE.
+--FE does any remaining work (joins, complex calcs) on the datacache.
+--The more work you can push to SE, the better. FE is always single-threaded and can become a bottleneck.
+
+-[Gordon] Materialization is a key concept:
+--Materialization = when SE returns a datacache to FE.
+---If the datacache is large, performance suffers.
+---"Late materialization" (SE returns only what’s needed) is ideal.
+---"Early materialization" (SE returns too much, FE does the rest) is slow.
+---Always try to write DAX so SE can do the grouping/aggregation—avoid bringing back giant tables to FE.
+
+-[Gordon] Relationships and joins:
+--VertiPaq stores relationships as mappings between IDs and row numbers.
+--Joins are fast if cardinality is low.
+--High-cardinality relationships (lots of unique values) slow down queries.
+
+-[Gordon] VertiPaq has a cache for SE queries (last 512 queries per DB by default).
+--FE has no cache.
+--If a query is repeated and the cache isn’t full, it can be extremely fast.
+
+-[Gordon] Hardware considerations for VertiPaq:
+--CPU speed and RAM speed matter more than core count.
+--More RAM = bigger models, but doesn’t make queries faster.
+--Disk I/O is only relevant for refreshes or paging—irrelevant for query speed if you have enough RAM.
+
+-[Gordon] Practical tips:
+--Remove unused columns, reduce cardinality, and denormalize where it helps performance.
+--Use DAX Studio and VertiPaq Analyzer to see what’s really happening—look for big datacaches and slow SE queries.
+--If you see lots of time in FE, try to rewrite your DAX to push more work to SE.
+
+-[Gordon] Key terms and definitions:
+--Formula Engine (FE): Single-threaded, logic, query planning, DAX/MDX.
+--Storage Engine (SE): Multi-threaded, data scans, aggregation, VertiPaq or DirectQuery.
+--Datacache: Uncompressed, in-memory table returned by SE to FE.
+--Materialization: The process of SE returning data to FE—keep it as small as possible.
+--Segments: Chunks of data for parallel processing in VertiPaq.
+--Cardinality: Number of unique values in a column—lower is better for performance.
+
+-[Gordon] Bottom line: Understanding the DAX engines is crucial for writing fast DAX.
+--Most performance problems come from not knowing what’s happening in FE vs. SE, or from forcing FE to do too much work.
+--Use the right tools, keep your models lean, and always try to push work to the storage engine.
