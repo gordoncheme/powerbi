@@ -471,3 +471,64 @@ Chapter 17 The DAX Engines
 -[Gordon] Bottom line: Understanding the DAX engines is crucial for writing fast DAX.
 --Most performance problems come from not knowing what’s happening in FE vs. SE, or from forcing FE to do too much work.
 --Use the right tools, keep your models lean, and always try to push work to the storage engine.
+
+# Chapter 19: Analyzing DAX Query Plans
+
+## [Gordon] Overview
+The chapter explains how to capture and interpret DAX query plans to understand performance and optimize DAX code.
+
+## [Gordon] Types of Query Plans
+- **Logical query plans**: Describe what the query intends to do.
+- **Physical query plans**: Describe how the query is actually executed.
+- **Storage engine queries**: Show how data is retrieved from VertiPaq or DirectQuery sources.
+
+## [Gordon] Capturing Query Plans
+- Use **DAX Studio** or **SQL Server Profiler**.
+- DAX Studio provides server timings and query plan views.
+- SQL Server Profiler traces events and performance metrics.
+
+## [Gordon] VertiPaq Storage Engine Queries
+- Use **xmSQL syntax** to read VertiPaq queries.
+- xmSQL shows how VertiPaq scans and aggregates data.
+- **Scan time** is a key metric—long scan times indicate performance issues.
+
+## [Gordon] DISTINCTCOUNT Internals
+- DISTINCTCOUNT is expensive due to hash set construction.
+- Avoid using it on high-cardinality columns.
+
+## [Gordon] Parallelism and Datacache
+- VertiPaq parallelizes queries across segments.
+- **Datacache** is the uncompressed result returned to the Formula Engine.
+- Large datacaches slow performance—minimize materialization.
+
+## [Gordon] VertiPaq Cache
+- Stores results of previous queries (up to 512 per DB).
+- Repeated queries can be extremely fast if cached.
+
+## [Gordon] CallbackDataID
+- Occurs when FE needs data not returned by SE.
+- Triggers a second query—can be a performance bottleneck.
+- Avoid complex expressions that force FE to request additional data.
+
+## [Gordon] DirectQuery Storage Engine Queries
+- Pushes queries to the source database.
+- Slower than VertiPaq and harder to optimize.
+- Use aggregations and filters to reduce query complexity.
+
+## [Gordon] Composite Models
+- Combine VertiPaq and DirectQuery tables.
+- Requires careful modeling to avoid performance issues.
+
+## [Gordon] Aggregations in the Data Model
+- Pre-aggregated tables improve performance.
+- Use aggregation tables with relationships and DAX logic to redirect queries.
+
+## [Gordon] Reading Query Plans
+- Identify which part of the query is slow—FE or SE.
+- Use server timings and query plan views to find bottlenecks.
+
+## [Gordon] Bottom Line
+- Analyzing DAX query plans is essential for performance tuning.
+- Use DAX Studio and Profiler to capture and interpret query plans.
+- Focus on reducing scan time, datacache size, and CallbackDataID events.
+- Optimize your model and DAX code to push work to the storage engine.
