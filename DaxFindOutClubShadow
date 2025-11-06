@@ -532,3 +532,82 @@ The chapter explains how to capture and interpret DAX query plans to understand 
 - Use DAX Studio and Profiler to capture and interpret query plans.
 - Focus on reducing scan time, datacache size, and CallbackDataID events.
 - Optimize your model and DAX code to push work to the storage engine.
+
+# Chapter 20: Optimizing DAX
+
+## [Gordon] Overview
+This chapter delivers a practical, step-by-step approach to DAX optimization. It focuses on identifying bottlenecks, analyzing query plans, and iteratively improving performance using DAX Studio and server timings.
+
+---
+
+## [Gordon] Optimization Workflow
+
+1. **Identify the Slow Expression**
+   - Use DAX Studio or Profiler to capture slow queries.
+   - Isolate the slowest measure or DAX expression.
+
+2. **Create a Reproduction Query**
+   - Build a minimal query that reproduces the performance issue.
+   - Use `DEFINE MEASURE` in DAX Studio for rapid iteration.
+
+3. **Analyze Server Timings & Query Plans**
+   - Enable Server Timings and Query Plan in DAX Studio.
+   - Determine if the bottleneck is in the Storage Engine (SE) or Formula Engine (FE).
+   - Look for large materializations, excessive SE queries, or high FE row counts.
+
+4. **Implement Changes and Rerun**
+   - Apply optimizations (see below).
+   - Rerun the test query, compare timings, and repeat as needed.
+
+---
+
+## [Gordon] Key Optimization Techniques
+
+1. **Prefer Column Filters over Table Filters**
+   - Use column-based filters in `CALCULATE`/`CALCULATETABLE`.
+   - Table filters often cause excessive materialization and slow performance.
+
+2. **Reduce Context Transitions**
+   - Minimize use of iterators (e.g., `SUMX`) over large tables.
+   - Use `VALUES` or `SUMMARIZE` to reduce the number of context transitions.
+
+3. **Avoid Unnecessary IF/SWITCH in Iterators**
+   - `IF` inside iterators can trigger `CallbackDataID`, slowing down queries.
+   - Where possible, use `CALCULATE` with filters instead of `IF` for conditional logic.
+
+4. **Leverage Variables**
+   - Store repeated sub-expressions in variables to avoid redundant computation.
+   - Assign variables outside of `IF`/`SWITCH` when used in multiple branches.
+
+5. **Minimize CallbackDataID**
+   - Functions not supported by the storage engine (e.g., `ROUND`, `IFERROR`) inside iterators cause FE callbacks.
+   - Refactor logic to push more work to the storage engine.
+
+6. **Optimize DISTINCTCOUNT**
+   - Avoid table filters with `DISTINCTCOUNT`; use column filters and `KEEPFILTERS` for better SE query plans.
+
+7. **Reduce Nested Iterators**
+   - Flatten nested `SUMX`/`SUMMARIZE` where possible.
+   - Use a single iterator over a summarized table to minimize FE workload.
+
+---
+
+## [Gordon] Reading and Using Server Timings
+
+- **SE Bottleneck:** Large scan times, many SE queries, or large datacaches.
+- **FE Bottleneck:** High row counts in FE, large materializations, or complex query plans.
+- **Materialization:** Aim for late materialization (SE returns only needed rows).
+- **CallbackDataID:** Indicates FE is doing row-by-row work; optimize to reduce.
+
+---
+
+## [Gordon] Bottom Line
+
+- DAX optimization is iterative: identify, reproduce, analyze, change, and retest.
+- Focus on reducing materialization, context transitions, and FE callbacks.
+- Use DAX Studio’s Server Timings and Query Plan to guide your efforts.
+- There are no universal best practices—always test in your own data model.
+
+---
+
+**Reference:** Definitive Guide to DAX Russo & Ferrari 2nd Ed, Chapter 20 (pp. 657–709)
