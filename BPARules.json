@@ -723,5 +723,67 @@
     "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
     "Expression": "Name.ToUpper().Contains(\"MONTH\")\r\nand\r\n! Name.ToUpper().Contains(\"MONTHS\") \r\nand \r\n\n\nDataType == DataType.String \r\nand \r\nSortByColumn == null",
     "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "MODELING_AVOID_CALCULATED_COLUMNS",
+    "Name": "[Modeling] Avoid calculated columns",
+    "Category": "Modeling",
+    "Description": "Calculated columns increase model size and refresh time; prefer measures or compute upstream.",
+    "Severity": 2,
+    "Scope": "CalculatedColumn",
+    "Expression": "true",
+    "CompatibilityLevel": 0
+  },
+  {
+    "ID": "FORMATTING_MEASURES_FORMAT_STRING",
+    "Name": "[Formatting] Measures must define a Format String",
+    "Category": "Formatting",
+    "Description": "Visible measures should have a format string appropriate to their data type.",
+    "Severity": 2,
+    "Scope": "Measure",
+    "Expression": "IsVisible and string.IsNullOrWhitespace(FormatString) and (DataType = \"Int64\" or DataType = \"DateTime\" or DataType = \"Double\" or DataType = \"Decimal\")",
+    "CompatibilityLevel": 0
+  },
+  {
+    "ID": "MODELING_AVOID_BIDIRECTIONAL_RELATIONSHIPS",
+    "Name": "[Modeling] Avoid bi-directional relationships",
+    "Category": "Modeling",
+    "Description": "Bi-directional relationships should be avoided unless explicitly justified.",
+    "Severity": 2,
+    "Scope": "Relationship",
+    "Expression": "CrossFilteringBehavior = \"BothDirections\"",
+    "CompatibilityLevel": 0
+  },
+{
+    "ID": "MODEL_SHOULD_HAVE_A_DATE_TABLE",
+    "Name": "[Performance] Model should have a date table",
+    "Category": "Performance",
+    "Description": "Generally speaking, models should generally have a date table. Models that do not have a date table generally are not taking advantage of features such as time intelligence or may not have a properly structured architecture.",
+    "Severity": 2,
+    "Scope": "Model",
+    "Expression": "Tables.Any(DataCategory == \"Time\" && Columns.Any(IsKey == true && DataType == \"DateTime\")) == false",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "USABILITY_MEASURE_DISPLAY_FOLDERS",
+    "Name": "[Usability] Measures should be organized in display folders",
+    "Category": "Usability",
+    "Description": "Organize visible measures into display folders for discoverability.",
+    "Severity": 1,
+    "Scope": "Measure",
+    "Expression": "IsVisible and string.IsNullOrWhitespace(DisplayFolder)",
+    "FixExpression": "DisplayFolder = \"Measures\"",
+    "CompatibilityLevel": 0
+  },
+  {
+    "ID": "FKCOLUMNS_HIDDEN",
+    "Name": "[Fixer] Hide foreign key columns",
+    "Category": "Fixer",
+    "Description": "Columns used on the Many side of a relationship should be hidden.",
+    "Severity": 1,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "Model.Relationships.Any(FromColumn = outerIt) and not IsHidden and not Table.IsHidden",
+    "FixExpression": "IsHidden = true",
+    "CompatibilityLevel": 0
   }
 ]
