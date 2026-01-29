@@ -792,10 +792,11 @@
     "Category": "Code Hygiene",
     "Description": "When developing DAX, a developer will leave a note like \"TODO\" or \"TO DO\" for something to complete or resolve later.  These need to be resolved.",
     "Severity": 1,
-    "Scope": "Measure, CalculatedColumn",
+    "Scope": "Measure, CalculatedColumn, CalculatedTable, CalculationGroup, CalculationItem",
     "Expression": "not String.IsNullOrWhitespace(Expression) and Regex.IsMatch(Expression, \"(?i)(?<![A-Za-z0-9])TO\\s*DO(?![A-Za-z0-9])\")",
     "CompatibilityLevel": 1200
   }
 ]
+
 
 
