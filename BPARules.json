@@ -795,8 +795,19 @@
     "Scope": "Measure, CalculatedColumn, CalculatedTable, CalculationGroup, CalculationItem",
     "Expression": "not String.IsNullOrWhitespace(Expression) and Regex.IsMatch(Expression, \"(?i)(?<![A-Za-z0-9])TO\\s*DO(?![A-Za-z0-9])\")",
     "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "RESOLVE_M_CODE_TO_DO_ITEMS",
+    "Name": "[Code Hygiene] Resolve M code to do items",
+    "Category": "Code Hygiene",
+    "Description": "When developing M code queries, developers will note \"TODO\" or \"TO DO\" items.  This checks for remaining to do items in M code.",
+    "Severity": 1,
+    "Scope": "Partition",
+    "Expression": "\r\nSourceType = \"M\"\r\nand not String.IsNullOrWhitespace(Expression)\r\nand Regex.IsMatch(Expression, \"(?i)(?<![A-Za-z0-9])TO\\s*DO(?![A-Za-z0-9])\")\r\n",
+    "CompatibilityLevel": 1200
   }
 ]
+
 
 
 
