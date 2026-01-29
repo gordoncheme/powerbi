@@ -788,7 +788,7 @@
   },
   {
     "ID": "RESOLVE_DAX_TO_DO_ITEMS",
-    "Name": "RESOLVE_DAX_TO_DO_ITEMS",
+    "Name": "[Code Hygiene] Resolve DAX to do items",
     "Category": "Code Hygiene",
     "Description": "When developing DAX, a developer will leave a note like \"TODO\" or \"TO DO\" for something to complete or resolve later.  These need to be resolved.",
     "Severity": 1,
@@ -797,4 +797,5 @@
     "CompatibilityLevel": 1200
   }
 ]
+
 
