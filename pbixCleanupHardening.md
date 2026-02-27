@@ -32,7 +32,8 @@
 2. **Evaluate removal** of other columns
 3. Columns are only **“killed” in M code**  
 4. Use _Kill columns_ to obtain the M code with removed columns
-5. Replace the M code in Power Query manually
+   - _Date/ Datetime columns are kept if CALENDARAUTO is used_
+6. Replace the M code in Power Query manually
 5. **Recommended:** "remove other columns" to keep only the columns desired
 
 ### 2.4 Hide What Remains
