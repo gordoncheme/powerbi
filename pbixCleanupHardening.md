@@ -6,6 +6,7 @@
 
 ## 2. Model Cleanup (MK Model Killer)
 1. **Run MK**
+2. **WARNING** some columns/ measures may be used in external queries (e.g., power automate, excel) that measure killer can't see
 
 ### 2.1 OPTION TMDL Replacement (High Risk / High Reward)
 > _“The brave — clean it all”_
