@@ -6,7 +6,7 @@
 
 ## 2. Model Cleanup (MK Model Killer)
 1. **Run MK**
-2. **WARNING** some columns/ measures may be used in external queries (e.g., power automate, excel) that measure killer can't see.  As a rule of thumb, save DAX queries used in PowerAutomate, in the DAX query editor in power bi desktop
+2. **WARNING** some columns/ measures may be used in external queries (e.g., power automate, excel) that measure killer can't see.  As a rule of thumb, save DAX queries used in PowerAutomate, in the DAX query editor in power bi desktop; review these for dependencies downstream
 
 ### 2.1 OPTION TMDL Replacement (High Risk / High Reward)
 > _“The brave — clean it all”_
