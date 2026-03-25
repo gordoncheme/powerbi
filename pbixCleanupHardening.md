@@ -4,7 +4,7 @@
 1. **Finalize the report**
 2. **Save a pbix copy** for clean up
 
-## 2. Model Cleanup (MK Model Killer)
+## 2. Model Cleanup (MK Measure Killer)
 1. **Run MK**
 2. **WARNING** some columns/ measures may be used in external queries (e.g., power automate, excel) that measure killer can't see.  As a rule of thumb, save DAX queries used in PowerAutomate, in the DAX query editor in power bi desktop; review these for dependencies downstream
 
