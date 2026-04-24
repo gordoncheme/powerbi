@@ -5,7 +5,7 @@ This document describes how to parse a Tableau `.twb` file using **Python**, sta
 This workflow uses **Python 3.11.x** (specifically any version less than **3.13**) and assumes the parsing logic is contained in existing Python scripts named:
 
 - `run_twb_parse.py`
-- `json_to_excel.py`
+- `json_to_excel.py` --NOTE: json_to_excel.py is now part of run_twb_parse.py
 
 ---
 
@@ -146,6 +146,7 @@ The script will analyze the Tableau workbook and create a **structured JSON file
 ---
 
 ## 9. Confirm JSON Output
+_NOTE: run_twb_parse.py now converts json to xls_
 
 Verify that the **JSON output file** has been created.
 
@@ -154,6 +155,7 @@ This JSON file represents the parsed Tableau workbook and serves as the **interm
 ---
 
 ## 10. Convert JSON to Excel
+_NOTE: run_twb_parse.py now converts json to xls_
 
 Run the Excel conversion script:
 
@@ -176,7 +178,7 @@ Inspect the **target directory**.
 You should now have:
 
 ```
-parsed_workbook.json
+parsed_workbook.json  NOTE: json is no longer created as an intermediate step
 parsed_workbook.xlsx
 ```
 
