@@ -11,7 +11,7 @@ This workflow uses **Python 3.11.x** (specifically any version less than **3.13*
 
 ## 1. Install Python
 
-Start from a machine with nothing installed.
+Start from a machine with nothing installed except VS code.
 
 1. Open a web browser and navigate to:  
    https://www.python.org/downloads/
@@ -62,7 +62,7 @@ Ensure the following scripts are present in the same working directory:
 
 ```
 run_twb_parse.py
-json_to_excel.py
+json_to_excel.py --NOTE: json_to_excel.py is now part of run_twb_parse.py
 ```
 
 These scripts are responsible for:
@@ -89,6 +89,7 @@ Save the file after making changes.
 ---
 
 ## 6. Review Excel Conversion Script
+_NOTE: no longer necessary_
 
 Open `json_to_excel.py` in a text editor.
 
@@ -141,12 +142,12 @@ Example:
 C:\path\to\your\file.twb
 ```
 
-The script will analyze the Tableau workbook and create a **structured JSON file** in the target directory.
+The script will analyze the Tableau workbook and create a **structured JSON file** and an **Excel file** in the target directory.
 
 ---
 
 ## 9. Confirm JSON Output
-_NOTE: run_twb_parse.py now converts json to xls_
+_NOTE: run_twb_parse.py now converts json to xls in its single run_
 
 Verify that the **JSON output file** has been created.
 
@@ -155,7 +156,7 @@ This JSON file represents the parsed Tableau workbook and serves as the **interm
 ---
 
 ## 10. Convert JSON to Excel
-_NOTE: run_twb_parse.py now converts json to xls_
+_NOTE: run_twb_parse.py now converts json to xls in its single run_
 
 Run the Excel conversion script:
 
@@ -178,7 +179,8 @@ Inspect the **target directory**.
 You should now have:
 
 ```
-parsed_workbook.json  NOTE: json is no longer created as an intermediate step
+parsed_workbook.json
+   NOTE: json is no longer created as an intermediate step between code runs
 parsed_workbook.xlsx
 ```
 
